@@ -7,7 +7,7 @@ const tabs = document.querySelectorAll(".box-tab");
 let activeTab = "MP";
 
 const epreuve1 = { "MP": "Math II:", "PC": "Chimie Organique:", "T": "Conception Mécanique:", "BG": "Chimie Organique:" };
-const epreuve2 = { "MP": "Math I:", "PC": "Mathematiques:", "T": "Mathematiques:", "BG": "Mathematiques:" };
+const epreuve2 = { "MP": "Math I:", "PC": "Math:", "T": "Math:", "BG": "Math:" };
 const epreuve3 = { "MP": "STA:", "PC": "STA:", "T": "STA:", "BG": "Géologie:" };
 
 const rangsMP = { 2025: [ 1, 10, 18, 55, 90, 138, 160, 150, 167, 163, 161, 136, 105, 66, 55, 29, 15, 0, 2, 0 ], 2024: [ 5, 29, 57, 134, 181, 209, 209, 224, 201, 162, 121, 78, 58, 30, 7, 6, 2, 0, 0, 0 ] };
