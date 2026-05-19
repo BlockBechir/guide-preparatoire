@@ -81,3 +81,13 @@ select {
 .hidden-element {
     display: none !important;
 }
+.watermark {
+    position: fixed;
+    top: 20px;
+    opacity: 0.2;
+    font-size: 20px;
+    color: #FFFFFF;
+    pointer-events: none;
+    user-select: none;
+    z-index: 9999;
+}
