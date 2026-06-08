@@ -2,6 +2,7 @@ const inputs = document.querySelectorAll("input[type=number]");
 const yearSelect = document.getElementById("year");
 const resultDiv = document.getElementById("result");
 const resultDiv2 = document.getElementById("result2");
+const resultDiv3 = document.getElementById("Admise");
 const tabs = document.querySelectorAll(".box-tab");
 const bonusCheck = document.getElementById("bonus");
 
@@ -12,6 +13,16 @@ let activeTab = "MP";
 const epreuve1 = { "MP": "Math II:", "PC": "Chimie Organique:", "T": "Conception Mécanique:", "BG": "Chimie Organique:" };
 const epreuve2 = { "MP": "Math I:", "PC": "Math:", "T": "Math:", "BG": "Math:" };
 const epreuve3 = { "MP": "STA:", "PC": "STA:", "T": "STA:", "BG": "Géologie:" };
+
+const Candidates = {
+  2025: { "MP": 1522, "PC": 1186, "T": 752, "BG": 293 },
+  2024: { "MP": 1714, "PC": 1235, "T": 768, "BG": 328 }
+}
+
+const Admise = {
+  2025: { "MP": 1326, "PC": 1045, "T": 689, "BG": 253 },
+  2024: { "MP": 1410, "PC": 1030, "T": 686, "BG": 290 }
+}
 
 const rangsMP = { 2025: [ 1, 10, 18, 55, 90, 138, 160, 150, 167, 163, 161, 136, 105, 66, 55, 29, 15, 0, 2, 0 ], 2024: [ 5, 29, 57, 134, 181, 209, 209, 224, 201, 162, 121, 78, 58, 30, 7, 6, 2, 0, 0, 0 ] };
 const rangsPC = { 2025: [0,1,13,52,90,150,174,165,143,118,99,85,42,28,13,9,2,1,0,0], 2024: [4,10,31,93,150,183,203,157,131,96,67,40,35,22,6,6,0,0,0] };
@@ -216,8 +227,22 @@ function update() {
 
   const avg = computeAverage(values);
   const rang = computeRang(avg, yearSelect.value, activeTab);
+  let percentage = 100 * rang / Candidates[ yearSelect.value ][ activeTab ];
   
-  resultDiv.textContent = "Rang ≈ " + rang;
+  if (percentage % 1 === 0) {
+    resultDiv.textContent = "Rang ≈ " + rang + " (Top " + Math.trunc(percentage) + "%)";
+  } else {
+    resultDiv.textContent = "Rang ≈ " + rang + " (Top " + percentage.toFixed(2) + "%)";
+  }
+  if (rang <= Admise[yearSelect.value][activeTab]) {
+    resultDiv3.textContent = "Admis";
+    resultDiv3.classList.add("Admise");
+    resultDiv3.classList.remove("Refuse");
+  } else {
+    resultDiv3.textContent = "Refusé";
+    resultDiv3.classList.add("Refuse");
+    resultDiv3.classList.remove("Admise");
+  }
   resultDiv2.textContent = "Moyenne = " + avg.toFixed(2);
 }
 

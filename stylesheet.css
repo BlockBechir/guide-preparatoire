@@ -36,6 +36,22 @@ body {
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
+.Refuse {
+    font-size: 1.4rem;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #d61313ba;
+    text-shadow: 0 0 10px rgba(214, 19, 19, 0.73);
+}
+
+.Admise {
+    font-size: 1.4rem;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #04da20ba;
+    text-shadow: 0 0 10px hsla(128, 96%, 44%, 0.729);
+}
+
 #result2 {
     font-size: 1.1rem;
     margin-top: 5px;
