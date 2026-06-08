@@ -3,6 +3,9 @@ const yearSelect = document.getElementById("year");
 const resultDiv = document.getElementById("result");
 const resultDiv2 = document.getElementById("result2");
 const tabs = document.querySelectorAll(".box-tab");
+const bonusCheck = document.getElementById("bonus");
+
+bonusCheck.addEventListener("change", update);
 
 let activeTab = "MP";
 
@@ -158,6 +161,9 @@ function computeAverage(values) {
   for (let i = 0; i < values.length; i++) {
     total += values[i] * (currentWeights[i] || 0);
     sumWeights += (currentWeights[i] || 0);
+  }
+  if (bonusCheck.checked) {
+    total += 15;
   }
   return sumWeights > 0 ? (total / sumWeights) : 0;
 }

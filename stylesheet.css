@@ -115,3 +115,34 @@ select:focus {
     font-weight: 500;
     margin-left: 10px;
 }
+input[type="checkbox"] {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background-color: #1e293b;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #34d399;
+}
+
+input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: #f8fafc;
+    transition: transform 0.15s ease;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: translateX(20px);
+}
