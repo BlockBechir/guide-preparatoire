@@ -543,6 +543,8 @@ input[type="checkbox"]:checked::before {
         box-sizing: border-box;
     }
 }
-.hidden-element {
+.hidden-element,
+.input-group.hidden-element,
+div.hidden-element {
     display: none !important;
 }
