@@ -240,3 +240,180 @@ input[type="checkbox"]:checked::before {
     padding-left: 2px;
     text-align: center;
 }
+.rank-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #0f172a;
+  margin: 0 0 40px 0;
+  max-width: 1200px;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.rank-table th {
+  background-color: #1e293b;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid #1e293b;
+}
+
+.rank-table th:nth-child(1) {
+  width: 50%;
+}
+
+.rank-table th:nth-child(2) {
+  width: 35%;
+}
+
+.rank-table th:nth-child(3) {
+  width: 15%;
+}
+
+.rank-table td {
+  padding: 16px 24px;
+  font-size: 15px;
+  color: #e2e8f0;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.rank-table tbody td {
+  border: none;
+}
+
+.rank-table tbody tr:has(td[rowspan]) td,
+.rank-table tbody tr:first-child td,
+.rank-table tbody tr td:first-child:not([rowspan]) {
+  border-top: 1px solid #1e293b;
+}
+
+.rank-table td[rowspan] {
+  font-weight: 700;
+  color: #38bdf8;
+  font-size: 16px;
+  background-color: #0f172a;
+}
+
+.rank-table td:last-child {
+  color: #f97316;
+  font-weight: 700;
+  text-align: center;
+}
+
+.rank-table th:nth-child(3) {
+  width: 15%;
+  text-align: center;
+}
+
+.rank-table {
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.search-container input {
+    width: 100%;
+    max-width: 500px;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: #e2e8f0;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-container input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+}
+
+.table-search-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #1e293b;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 12px 20px;
+  
+  width: 100%;
+  max-width: 380px;
+  align-self: flex-start;
+  margin: 40px 0 0 0;
+}
+
+.table-search-tab .box-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.table-search-tab input {
+  width: 100%;
+  max-width: 350px;
+  background: #0b0f19;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: #e2e8f0;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.table-search-tab input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
+}
+
+.contact-notice {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-left: 4px solid #1877f2;
+  color: #94a3b8;
+  padding: 14px 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.contact-link:hover {
+  color: #0284c7; 
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}

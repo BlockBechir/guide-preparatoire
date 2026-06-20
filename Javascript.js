@@ -147,10 +147,9 @@ tabs.forEach(tab => {
   tab.addEventListener("click", (event) => {
     activeTab = event.target.dataset.value;
     tabs.forEach(t => {
-      t.style.backgroundColor = "#131314";
+      t.style.backgroundColor = "";
       t.classList.remove("active");
     });
-    event.target.style.backgroundColor = "#1E1F20";
     event.target.classList.add("active");
     
     document.querySelector('label[for="analyse"]').textContent = epreuve2[activeTab] || "Math I:";
@@ -161,7 +160,20 @@ tabs.forEach(tab => {
     document.getElementById("group-genetique").classList.toggle("hidden-element", !isBG);
     document.getElementById("group-animale").classList.toggle("hidden-element", !isBG);
     document.getElementById("group-vegetale").classList.toggle("hidden-element", !isBG);
-    
+
+    const tableMap = { "MP": "rankTableMP", "PC": "rankTablePC", "T": "rankTableT", "BG": "rankTableBG" };
+    document.querySelectorAll(".rank-table").forEach(t => t.classList.add("hidden-element"));
+    const activeTable = document.getElementById(tableMap[activeTab]);
+    if (activeTable) {
+      activeTable.classList.remove("hidden-element");
+      loadTableRows(activeTable);
+    }
+
+    const textInput = document.querySelector(".table-search");
+    if (textInput) textInput.value = "";
+    const rankInput = document.querySelector(".rank-filter");
+    if (rankInput) rankInput.value = "";
+
     update();
   });
 });
@@ -217,9 +229,9 @@ function update() {
       rankLabel.style.display = "";
       
       if (yearSelect.value === "2024" && activeTab !== "BG" && i === 7) {
-        rankLabel.textContent = "no data";
+        rankLabel.textContent = "indisponible";
       } else if (yearSelect.value === "2024" && activeTab === "T" && i === 1) {
-        rankLabel.textContent = "no data";
+        rankLabel.textContent = "indisponible";
       } else {
         rankLabel.textContent = computeSubjectRang(val, activeTab, yearSelect.value, i);
       }
@@ -251,3 +263,197 @@ inputs.forEach(input => input.addEventListener("input", update));
 yearSelect.addEventListener("change", update);
 
 update();
+
+let originalTableRows = [];
+let searchTimeout = null;
+
+function loadTableRows(table) {
+  if (!table) return;
+  const tbody = table.getElementsByTagName("tbody")[0];
+  const rows = Array.from(tbody.getElementsByTagName("tr"));
+  let lastSchoolText = "";
+  let lastSchoolSubname = "";
+
+  originalTableRows = rows.map(row => {
+    const schoolCell = row.querySelector("td[rowspan]");
+    if (schoolCell) {
+      lastSchoolText = schoolCell.textContent;
+      lastSchoolSubname = schoolCell.getAttribute("data-subname") || "";
+    }
+
+    const cells = Array.from(row.getElementsByTagName("td"));
+    let specialtyCell, rankCell;
+
+    if (schoolCell) {
+      specialtyCell = cells[1];
+      rankCell = cells[2];
+    } else {
+      specialtyCell = cells[0];
+      rankCell = cells[1];
+    }
+
+    return {
+      schoolText: lastSchoolText,
+      schoolSubname: lastSchoolSubname,
+      specialtyText: specialtyCell ? specialtyCell.textContent : "",
+      specialtySubname: specialtyCell ? (specialtyCell.getAttribute("data-subname") || "") : "",
+      rankText: rankCell ? rankCell.textContent : ""
+    };
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const table = document.querySelector(".rank-table:not(.hidden-element)");
+  loadTableRows(table);
+});
+
+function filterRankTable() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    const activeTable = document.querySelector(".rank-table:not(.hidden-element)");
+    if (activeTable) {
+      executeFilter(activeTable);
+    }
+  }, 500);
+}
+
+function executeFilter(table) {
+  const textInput = document.querySelector(".table-search");
+  const rankInput = document.querySelector(".rank-filter");
+
+  if (!textInput || !rankInput) return;
+
+  const rawFilter = textInput.value.trim();
+  const filter = cleanString(textInput.value);
+  const maxRankThreshold = parseInt(rankInput.value, 10);
+
+  const tbody = table.getElementsByTagName("tbody")[0];
+  tbody.innerHTML = "";
+
+  let activeSchool = "";
+  let accumulatedRows = [];
+
+  const isSubnameQuery = rawFilter !== "" && /^[A-Z]+$/.test(rawFilter);
+
+  originalTableRows.forEach((rowData) => {
+    let textConditionMatches = false;
+
+    if (rawFilter === "") {
+      textConditionMatches = true;
+    } else if (isSubnameQuery) {
+      const schoolSubnames = rowData.schoolSubname.split(/\s+/);
+      const specialtySubnames = rowData.specialtySubname.split(/\s+/);
+      textConditionMatches = schoolSubnames.includes(rawFilter) || specialtySubnames.includes(rawFilter);
+    } else {
+      const schoolSubnames = rowData.schoolSubname.split(/\s+/);
+      const specialtySubnames = rowData.specialtySubname.split(/\s+/);
+
+      textConditionMatches =
+        cleanString(rowData.schoolText).includes(filter) ||
+        cleanString(rowData.specialtyText).includes(filter) ||
+        schoolSubnames.includes(rawFilter) ||
+        specialtySubnames.includes(rawFilter);
+    }
+
+    let rankConditionMatches = true;
+    if (!isNaN(maxRankThreshold)) {
+      const parsedRowRank = parseInt(rowData.rankText.replace(/\s/g, ""), 10);
+      if (isNaN(parsedRowRank) || parsedRowRank < maxRankThreshold) {
+        rankConditionMatches = false;
+      }
+    }
+
+    if (textConditionMatches && rankConditionMatches) {
+      if (rowData.schoolText !== activeSchool) {
+        renderGroup(accumulatedRows);
+        activeSchool = rowData.schoolText;
+        accumulatedRows = [rowData];
+      } else {
+        accumulatedRows.push(rowData);
+      }
+    }
+  });
+
+  renderGroup(accumulatedRows);
+
+  function renderGroup(group) {
+    if (group.length === 0) return;
+    group.forEach((data, index) => {
+      const tr = document.createElement("tr");
+      if (index === 0) {
+        const tdSchool = document.createElement("td");
+        tdSchool.setAttribute("rowspan", group.length);
+        tdSchool.setAttribute("data-subname", data.schoolSubname);
+        tdSchool.textContent = data.schoolText;
+        tr.appendChild(tdSchool);
+      }
+      const tdSpec = document.createElement("td");
+      if (data.specialtySubname) tdSpec.setAttribute("data-subname", data.specialtySubname);
+      tdSpec.textContent = data.specialtyText;
+      tr.appendChild(tdSpec);
+
+      const tdRank = document.createElement("td");
+      tdRank.textContent = data.rankText;
+      tr.appendChild(tdRank);
+
+      tbody.appendChild(tr);
+    });
+  }
+}
+
+function cleanString(str) {
+  return str.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/i/g, "e");
+}
+
+const pageTabs = document.querySelectorAll('[data-page-target]');
+const calculatorPage = document.getElementById('calculator');
+const guidePage = document.getElementById('guide');
+
+function switchGuideTable(tableTarget) {
+    const tableTabs = guidePage.querySelectorAll('[data-table-target]');
+    tableTabs.forEach(t => t.classList.remove('active'));
+    const activeTab = guidePage.querySelector(`[data-table-target="${tableTarget}"]`);
+    if (activeTab) activeTab.classList.add('active');
+
+    document.querySelectorAll('.rank-table').forEach(t => t.classList.add('hidden-element'));
+    const activeTable = document.getElementById(`rankTable${tableTarget}`);
+    if (activeTable) {
+        activeTable.classList.remove('hidden-element');
+        loadTableRows(activeTable);
+    }
+
+    const textInput = document.querySelector('.table-search');
+    if (textInput) textInput.value = '';
+    const rankInput = document.querySelector('.rank-filter');
+    if (rankInput) rankInput.value = '';
+}
+
+pageTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        pageTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const target = tab.dataset.pageTarget;
+
+        if (target === 'calculator') {
+            calculatorPage.classList.remove('hidden-element');
+            guidePage.classList.add('hidden-element');
+        } else if (target === 'guide') {
+            guidePage.classList.remove('hidden-element');
+            calculatorPage.classList.add('hidden-element');
+
+            const activeSectionTab = guidePage.querySelector('[data-table-target].active');
+            const tableTarget = activeSectionTab ? activeSectionTab.dataset.tableTarget : 'MP';
+            switchGuideTable(tableTarget);
+        }
+    });
+});
+
+guidePage.querySelectorAll('[data-table-target]').forEach(tab => {
+    tab.addEventListener('click', () => {
+        switchGuideTable(tab.dataset.tableTarget);
+    });
+});
