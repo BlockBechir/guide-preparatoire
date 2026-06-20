@@ -417,3 +417,94 @@ input[type="checkbox"]:checked::before {
   color: #0284c7; 
   text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .main-box {
+        width: 100%;
+        max-width: 100%;
+        padding: 16px 12px;
+        box-sizing: border-box;
+    }
+
+    .input-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .input-group label {
+        width: auto;
+        text-align: left;
+        margin-right: 8px;
+        font-size: 0.9rem;
+    }
+
+    .input-group input[type="number"] {
+        width: 70px;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .tabs-container {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding-bottom: 10px;
+    }
+
+    .box-tab {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        min-width: 60px;
+        max-width: none;
+    }
+
+    .table-search-tab {
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+    }
+
+    .table-search-tab input {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .rank-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .rank-table th, 
+    .rank-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .rank-table th:nth-child(1),
+    .rank-table td[rowspan] {
+        width: 40%;
+        font-size: 13px;
+    }
+
+    .rank-table th:nth-child(2) {
+        width: 40%;
+    }
+
+    .rank-table th:nth-child(3) {
+        width: 20%;
+    }
+
+    .contact-notice,
+    .remarque {
+        padding: 12px;
+        font-size: 0.85rem;
+        margin: 15px auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
