@@ -472,32 +472,27 @@ input[type="checkbox"]:checked::before {
         font-size: 14px;
     }
 
-    .rank-table {
-        display: block;
+    .rank-table-wrapper {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
-    .rank-table th, 
+    .rank-table {
+        width: 700px;
+        min-width: 700px;
+        table-layout: fixed;
+    }
+
+    .rank-table th,
     .rank-table td {
         padding: 10px 12px;
         font-size: 13px;
     }
 
-    .rank-table th:nth-child(1),
-    .rank-table td[rowspan] {
-        width: 40%;
-        font-size: 13px;
-    }
-
-    .rank-table th:nth-child(2) {
-        width: 40%;
-    }
-
-    .rank-table th:nth-child(3) {
-        width: 20%;
-    }
+    .rank-table th:nth-child(1) { width: 280px; }
+    .rank-table th:nth-child(2) { width: 280px; }
+    .rank-table th:nth-child(3) { width: 140px; }
 
     .contact-notice,
     .remarque {
