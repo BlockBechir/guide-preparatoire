@@ -432,20 +432,36 @@ input[type="checkbox"]:checked::before {
 
     .input-group {
         width: 100%;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 80px 60px;
+        align-items: center;
+        gap: 8px;
+        justify-content: unset;
     }
 
-    .input-group label {
+    .input-group label:first-child {
         width: auto;
         text-align: left;
-        margin-right: 8px;
+        margin-right: 0;
         font-size: 0.9rem;
     }
 
-    .input-group input[type="number"] {
-        width: 70px;
+    .input-group input[type="number"],
+    .input-group select {
+        width: 100%;
         padding: 6px;
         font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .input-group input[type="checkbox"] {
+        justify-self: start;
+    }
+
+    /* rank label (3rd column) */
+    .input-group label:last-child {
+        text-align: right;
+        font-size: 0.9rem;
     }
 
     .tabs-container {
