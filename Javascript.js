@@ -282,14 +282,16 @@ function loadTableRows(table) {
     }
 
     const cells = Array.from(row.getElementsByTagName("td"));
-    let specialtyCell, rankCell;
+    let specialtyCell, rankCell, capaciteCell;
 
     if (schoolCell) {
       specialtyCell = cells[1];
       rankCell = cells[2];
+      capaciteCell = cells[3];
     } else {
       specialtyCell = cells[0];
       rankCell = cells[1];
+      capaciteCell = cells[2];
     }
 
     return {
@@ -297,7 +299,8 @@ function loadTableRows(table) {
       schoolSubname: lastSchoolSubname,
       specialtyText: specialtyCell ? specialtyCell.textContent : "",
       specialtySubname: specialtyCell ? (specialtyCell.getAttribute("data-subname") || "") : "",
-      rankText: rankCell ? rankCell.textContent : ""
+      rankText: rankCell ? rankCell.textContent : "",
+      capaciteText: capaciteCell ? capaciteCell.textContent : ""
     };
   });
 }
@@ -395,6 +398,12 @@ function executeFilter(table) {
       const tdRank = document.createElement("td");
       tdRank.textContent = data.rankText;
       tr.appendChild(tdRank);
+
+      if (data.capaciteText !== "") {
+        const tdCapacite = document.createElement("td");
+        tdCapacite.textContent = data.capaciteText;
+        tr.appendChild(tdCapacite);
+      }
 
       tbody.appendChild(tr);
     });
