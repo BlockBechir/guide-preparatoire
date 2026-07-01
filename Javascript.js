@@ -386,36 +386,6 @@ function update() {
 
   resultDiv2.textContent = "Moyenne = " + avg.toFixed(2);
 }
-  const avg = computeAverage(values);
-  const rang = computeRang(avg, yearSelect.value, activeTab);
-
-  if (yearSelect.value === "2022") {
-    // Hide rank/percentage and Admis/Refusé entirely for 2022
-    resultDiv.textContent = "";
-    resultDiv3.textContent = "";
-    resultDiv3.classList.remove("Admise", "Refuse");
-  } else {
-    let percentage = 100 * rang / Candidates[ yearSelect.value ][ activeTab ];
-
-    if (percentage % 1 === 0) {
-      resultDiv.textContent = "Rang ≈ " + rang + " (Top " + Math.trunc(percentage) + "%)";
-    } else {
-      resultDiv.textContent = "Rang ≈ " + rang + " (Top " + percentage.toFixed(2) + "%)";
-    }
-
-    if (rang <= Admise[yearSelect.value][activeTab]) {
-      resultDiv3.textContent = "Admis";
-      resultDiv3.classList.add("Admise");
-      resultDiv3.classList.remove("Refuse");
-    } else {
-      resultDiv3.textContent = "Refusé";
-      resultDiv3.classList.add("Refuse");
-      resultDiv3.classList.remove("Admise");
-    }
-  }
-
-  resultDiv2.textContent = "Moyenne = " + avg.toFixed(2);
-}
 
 inputs.forEach(input => input.addEventListener("input", update));
 yearSelect.addEventListener("change", update);
