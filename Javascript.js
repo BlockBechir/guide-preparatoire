@@ -1,4 +1,4 @@
-const inputs = document.querySelectorAll("input[type=number]");
+const inputs = document.querySelectorAll("input[name=grades]");
 const yearSelect = document.getElementById("year");
 const resultDiv = document.getElementById("result");
 const resultDiv2 = document.getElementById("result2");
