@@ -594,3 +594,77 @@ guidePage.querySelectorAll('[data-table-target]').forEach(tab => {
         switchGuideTable(tab.dataset.tableTarget);
     });
 });
+
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+
+const data = rangsMP[2025];
+
+const padding = { top: 40, right: 30, bottom: 50, left: 60 };
+const chartWidth = canvas.width - padding.left - padding.right;
+const chartHeight = canvas.height - padding.top - padding.bottom;
+
+const maxVal = Math.max(...data);
+const barCount = data.length;
+const barSpacing = 6;
+const totalSpacingSpace = barSpacing * (barCount - 1);
+const barWidth = (chartWidth - totalSpacingSpace) / barCount;
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+ctx.strokeStyle = '#FFFFFF';
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(padding.left, padding.top);
+ctx.lineTo(padding.left, canvas.height - padding.bottom);
+ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
+ctx.stroke();
+
+ctx.fillStyle = '#FFFFFF';
+ctx.font = '12px sans-serif';
+ctx.textAlign = 'right';
+ctx.textBaseline = 'middle';
+
+const yTicks = 5;
+for (let i = 0; i <= yTicks; i++) {
+    const val = Math.round((maxVal / yTicks) * i);
+    const y = canvas.height - padding.bottom - (chartHeight / yTicks) * i;
+    ctx.fillText(val, padding.left - 10, y);
+    
+    if (i > 0) {
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(canvas.width - padding.right, y);
+        ctx.stroke();
+    }
+}
+
+data.forEach((val, n) => {
+    const x = padding.left + n * (barWidth + barSpacing);
+    const barHeight = (val / maxVal) * chartHeight;
+    const y = canvas.height - padding.bottom - barHeight;
+
+    ctx.fillStyle = '#3498db';
+    ctx.fillRect(x, y, barWidth, barHeight);
+
+    // --- NEW: Code to display the value above the pillar ---
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    // Draws the value 4 pixels above the top of the bar
+    ctx.fillText(val, x + barWidth / 2, y - 4);
+    // -------------------------------------------------------
+
+    ctx.save();
+    ctx.translate(x + barWidth / 2, canvas.height - padding.bottom + 12);
+    ctx.rotate(-Math.PI / 4);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`[${n},${n+1}[`, 0, 0);
+    ctx.restore();
+});

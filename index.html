@@ -109,6 +109,15 @@
       L'application a été rigoureusement testée avec les notes réelles des candidats des sessions 2024 and 2025, confirmant la précision exacte de ses calculs, veuillez prévoir une marge d'erreur maximale de 5 rangs.
       Elle est développé par un étudiant de la promotion 2026 de l'Institut Préparatoire aux Études d'Ingénieurs de Bizerte (IPEIB).
     </p>
+    <h1>Comment le calcul d'un rang est fait?</h1>
+  <p class="explanation-text" style="text-align: center; font-weight: 600; margin-bottom: 10px; color: #e2e8f0;">
+      Répartition des candidats selon les moyennes (Rapport du Jury 2025):
+  </p>
+    <canvas id="chart" width="800" height="450"></canvas>
+  <p class="explanation-text">
+      La calculatrice commence par calculer votre moyenne selon les notes que vous avez entrées. Supposons que cette moyenne soit de 7.6, vous vous situez alors dans l'intervalle [7,8[. Votre rang initial est λ = 1. Selon le graphique, tous les candidats des intervalles de [8,20] sont en avance sur vous. On ajoute donc à λ la somme de tous ces intervalles supérieurs (167 + 163 + 161 + 136 + 105 + 66 + 55 + 29 + 15 + 0 + 2 + 0 = 899), ce qui donne λ = 900.<br><br>
+      Une fois les candidats des intervalles supérieurs cumulés, il ne reste plus qu'à estimer votre position précise au sein de l'intervalle [7,8[. Puisque la moyenne est de 7.6, la partie décimale de 0.6 indique que vous avez dépassé 60% de l'intervalle en partant de la note 7. Par interpolation linéaire, on considère que les 150 candidats présents dans cet intervalle sont répartis de manière uniforme. On calcule alors la part proportionnelle en multipliant l'effectif de l'intervalle par le complémentaire de cette décimale, soit 100% - 60% = 40% (150 × 0.4 = 60). Cela signifie que 60 personnes ont une meilleure moyenne que vous au sein de cette tranche. Ce nombre est ensuite ajouté à λ pour obtenir votre rang final précis : λ = 960.
+  </p>
   </form>
   <div id="guide" class="hidden-element" style="width: 100%; max-width: 1200px; margin: 0 auto;">
     <p class="contact-notice">
