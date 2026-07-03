@@ -610,61 +610,85 @@ const barSpacing = 6;
 const totalSpacingSpace = barSpacing * (barCount - 1);
 const barWidth = (chartWidth - totalSpacingSpace) / barCount;
 
-ctx.clearRect(0, 0, canvas.width, canvas.height);
+const themeButton = document.getElementById('theme');
+const themeLink = document.getElementById('theme-link');
 
-ctx.strokeStyle = '#FFFFFF';
-ctx.lineWidth = 2;
-ctx.beginPath();
-ctx.moveTo(padding.left, padding.top);
-ctx.lineTo(padding.left, canvas.height - padding.bottom);
-ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
-ctx.stroke();
+function drawChart() {
+    // Dynamic color selection matching the active stylesheet:
+    // dark theme (unchecked) = white text/axis, light theme (checked) = black text/axis
+    const graphTextColor = themeButton.checked ? '#000000' : '#FFFFFF';
 
-ctx.fillStyle = '#FFFFFF';
-ctx.font = '12px sans-serif';
-ctx.textAlign = 'right';
-ctx.textBaseline = 'middle';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-const yTicks = 5;
-for (let i = 0; i <= yTicks; i++) {
-    const val = Math.round((maxVal / yTicks) * i);
-    const y = canvas.height - padding.bottom - (chartHeight / yTicks) * i;
-    ctx.fillText(val, padding.left - 10, y);
-    
-    if (i > 0) {
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(padding.left, y);
-        ctx.lineTo(canvas.width - padding.right, y);
-        ctx.stroke();
-    }
-}
+    ctx.strokeStyle = graphTextColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, canvas.height - padding.bottom);
+    ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
+    ctx.stroke();
 
-data.forEach((val, n) => {
-    const x = padding.left + n * (barWidth + barSpacing);
-    const barHeight = (val / maxVal) * chartHeight;
-    const y = canvas.height - padding.bottom - barHeight;
-
-    ctx.fillStyle = '#3498db';
-    ctx.fillRect(x, y, barWidth, barHeight);
-
-    // --- NEW: Code to display the value above the pillar ---
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 10px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    // Draws the value 4 pixels above the top of the bar
-    ctx.fillText(val, x + barWidth / 2, y - 4);
-    // -------------------------------------------------------
-
-    ctx.save();
-    ctx.translate(x + barWidth / 2, canvas.height - padding.bottom + 12);
-    ctx.rotate(-Math.PI / 4);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '10px sans-serif';
+    ctx.fillStyle = graphTextColor;
+    ctx.font = '12px sans-serif';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`[${n},${n+1}[`, 0, 0);
-    ctx.restore();
+
+    const yTicks = 5;
+    for (let i = 0; i <= yTicks; i++) {
+        const val = Math.round((maxVal / yTicks) * i);
+        const y = canvas.height - padding.bottom - (chartHeight / yTicks) * i;
+        ctx.fillStyle = graphTextColor;
+        ctx.fillText(val, padding.left - 10, y);
+
+        if (i > 0) {
+            ctx.strokeStyle = 'rgba(128, 128, 128, 0.25)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(canvas.width - padding.right, y);
+            ctx.stroke();
+        }
+    }
+
+    data.forEach((val, n) => {
+        const x = padding.left + n * (barWidth + barSpacing);
+        const barHeight = (val / maxVal) * chartHeight;
+        const y = canvas.height - padding.bottom - barHeight;
+
+        ctx.fillStyle = '#3498db';
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        ctx.fillStyle = graphTextColor;
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(val, x + barWidth / 2, y - 4);
+
+        ctx.save();
+        ctx.translate(x + barWidth / 2, canvas.height - padding.bottom + 12);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillStyle = graphTextColor;
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`[${n},${n+1}[`, 0, 0);
+        ctx.restore();
+    });
+}
+
+drawChart();
+
+themeButton.addEventListener('change', function() {
+    if (this.checked) {
+        themeLink.setAttribute('href', 'stylesheet1.css');
+    } else {
+        themeLink.setAttribute('href', 'stylesheet.css?v=2');
+    }
+
+    drawChart();
+
+    // Call the original function in your script that calculates the scores, if present
+    if (typeof calculateScore === 'function') {
+        calculateScore();
+    }
 });

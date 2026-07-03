@@ -1,6 +1,10 @@
 body {
-    background-color: #0b0f19;
-    color: #e2e8f0;
+    background-color: #eef2f6;
+    background-image:
+        linear-gradient(rgba(2, 132, 199, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(2, 132, 199, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: #1e293b;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     padding: 20px;
     display: flex;
@@ -19,7 +23,7 @@ body {
     width: 150px;
     text-align: right;
     margin-right: 15px;
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .input-group input {
@@ -29,42 +33,46 @@ body {
 }
 
 #result {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 1.4rem;
     margin-top: 15px;
     font-weight: bold;
-    color: #38bdf8;
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    color: #0369a1;
+    text-shadow: 0 0 10px rgba(3, 105, 161, 0.12);
 }
 
 .Refuse {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 1.4rem;
     margin-top: 15px;
     font-weight: bold;
-    color: #d61313ba;
-    text-shadow: 0 0 10px rgba(214, 19, 19, 0.73);
+    color: #dc2626;
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.15);
 }
 
 .Admise {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 1.4rem;
     margin-top: 15px;
     font-weight: bold;
-    color: #04da20ba;
-    text-shadow: 0 0 10px hsla(128, 96%, 44%, 0.729);
+    color: #059669;
+    text-shadow: 0 0 10px rgba(5, 150, 105, 0.15);
 }
 
 #result2 {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 1.1rem;
     margin-top: 5px;
-    color: #34d399;
+    color: #059669;
 }
 
 input[type="number"] {
-    border: 1px solid #1e293b;
-    background-color: #020617;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
     padding: 8px;
     font-size: 16px;
     border-radius: 4px;
-    color: #f8fafc;
+    color: #0f172a;
     text-align: left;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -72,18 +80,94 @@ input[type="number"] {
 
 input[type="number"]:focus {
     border-color: #0284c7;
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.3);
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
 }
 
 .main-box {
     position: relative;
-    border: 1px solid #1e293b;
+    border: 1px solid #cbd5e1;
     border-radius: 10px;
     padding: 20px;
-    background-color: #0f172a;
+    background-color: #ffffff;
     width: fit-content;
     margin: 20px auto;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+}
+
+select {
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    color: #0f172a;
+    outline: none;
+}
+
+select:focus {
+    border-color: #0284c7;
+}
+
+.box-tab {
+    cursor: pointer;
+    background-color: #f8fafc;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.box-tab:hover {
+    color: #0f172a;
+    background-color: #e2e8f0;
+}
+
+.box-tab.active {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0284c7;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.3);
+}
+
+.input-group label:has(+ input + label) + input + label {
+    color: #c2410c;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+input[type="checkbox"] {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background-color: #cbd5e1;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #059669;
+}
+
+input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25);
+    transition: transform 0.15s ease;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: translateX(20px);
 }
 
 .theme-group {
@@ -96,81 +180,6 @@ input[type="number"]:focus {
     padding-bottom: 50px;
 }
 
-select {
-    border: 1px solid #1e293b;
-    background-color: #020617;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #f8fafc;
-    outline: none;
-}
-
-select:focus {
-    border-color: #0284c7;
-}
-
-.box-tab {
-    cursor: pointer;
-    background-color: #0f172a;
-    color: #64748b;
-    border: 1px solid #1e293b;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: all 0.15s ease;
-}
-
-.box-tab:hover {
-    color: #f8fafc;
-    background-color: #1e293b;
-}
-
-.box-tab.active {
-    background-color: #0284c7 !important;
-    color: #ffffff !important;
-    border-color: #0284c7;
-    box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
-}
-
-.input-group label:has(+ input + label) + input + label {
-    color: #f59e0b;
-    font-weight: 500;
-    margin-left: 10px;
-}
-
-input[type="checkbox"] {
-    position: relative;
-    width: 40px;
-    height: 20px;
-    appearance: none;
-    background-color: #1e293b;
-    outline: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-}
-
-input[type="checkbox"]:checked {
-    background-color: #34d399;
-}
-
-input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    background-color: #f8fafc;
-    transition: transform 0.15s ease;
-}
-
-input[type="checkbox"]:checked::before {
-    transform: translateX(20px);
-}
-
 .watermark {
     position: fixed;
     bottom: 20px;
@@ -178,16 +187,16 @@ input[type="checkbox"]:checked::before {
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    color: rgba(56, 189, 248, 0.25);
-    background: rgba(15, 23, 42, 0.6);
+    color: rgba(2, 132, 199, 0.35);
+    background: rgba(255, 255, 255, 0.7);
     padding: 6px 12px;
-    border: 1px solid rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(2, 132, 199, 0.2);
     border-radius: 6px;
     backdrop-filter: blur(4px);
     pointer-events: none;
     user-select: none;
     z-index: 9999;
-    font-family: monospace;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 .remarque {
@@ -197,7 +206,7 @@ input[type="checkbox"]:checked::before {
     line-height: 1.4;
     color: #64748b;
     text-align: center;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #cbd5e1;
     padding-top: 15px;
 }
 
@@ -207,7 +216,7 @@ input[type="checkbox"]:checked::before {
     gap: 8px;
     margin-bottom: 20px;
     width: 100%;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid #cbd5e1;
     padding-bottom: 15px;
 }
 
@@ -216,9 +225,9 @@ input[type="checkbox"]:checked::before {
     max-width: 80px;
     text-align: center;
     cursor: pointer;
-    background-color: #0f172a;
+    background-color: #f8fafc;
     color: #64748b;
-    border: 1px solid #1e293b;
+    border: 1px solid #cbd5e1;
     padding: 8px 12px;
     border-radius: 6px;
     font-weight: 600;
@@ -227,8 +236,8 @@ input[type="checkbox"]:checked::before {
 }
 
 .box-tab:hover {
-    color: #f8fafc;
-    background-color: #1e293b;
+    color: #0f172a;
+    background-color: #e2e8f0;
 }
 
 .box-title {
@@ -249,28 +258,28 @@ input[type="checkbox"]:checked::before {
   border-collapse: separate;
   border-spacing: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-color: #0f172a;
+  background-color: #ffffff;
   margin: 0 0 40px 0;
   max-width: 1200px;
-  border: 1px solid #1e293b;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
   margin-top: 0 !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
 
 .rank-table th {
-  background-color: #1e293b;
-  color: #64748b;
+  background-color: #f1f5f9;
+  color: #475569;
   font-weight: 700;
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 16px 24px;
   text-align: left;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid #cbd5e1;
 }
 
 .rank-table th:nth-child(1) { width: 40%; }
@@ -281,7 +290,7 @@ input[type="checkbox"]:checked::before {
 .rank-table td {
   padding: 16px 24px;
   font-size: 15px;
-  color: #e2e8f0;
+  color: #1e293b;
   vertical-align: middle;
   word-wrap: break-word;
 }
@@ -293,14 +302,14 @@ input[type="checkbox"]:checked::before {
 .rank-table tbody tr:has(td[rowspan]) td,
 .rank-table tbody tr:first-child td,
 .rank-table tbody tr td:first-child:not([rowspan]) {
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid #e2e8f0;
 }
 
 .rank-table td[rowspan] {
   font-weight: 700;
-  color: #38bdf8;
+  color: #0369a1;
   font-size: 16px;
-  background-color: #0f172a;
+  background-color: #ffffff;
 }
 
 /* Bold + center the Rang and Capacité columns for every row.
@@ -311,16 +320,17 @@ input[type="checkbox"]:checked::before {
 .rank-table tbody td:last-child {
   font-weight: 700;
   text-align: center;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 /* Rang column (second-to-last) — orange */
 .rank-table tbody td:nth-last-child(2) {
-  color: #f97316;
+  color: #c2410c;
 }
 
 /* Capacite column (last child) — blue */
 .rank-table tbody td:last-child {
-  color: #38bdf8;
+  color: #0369a1;
 }
 
 .search-container {
@@ -333,11 +343,11 @@ input[type="checkbox"]:checked::before {
 .search-container input {
     width: 100%;
     max-width: 500px;
-    background: #0f172a;
-    border: 1px solid #1e293b;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     padding: 10px 16px;
-    color: #e2e8f0;
+    color: #1e293b;
     font-size: 15px;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -345,14 +355,14 @@ input[type="checkbox"]:checked::before {
 
 .search-container input:focus {
     border-color: #0284c7;
-    box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
 }
 
 .table-search-tab {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: 1px solid #1e293b;
+  border: 1px solid #cbd5e1;
   border-bottom: none;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -361,6 +371,7 @@ input[type="checkbox"]:checked::before {
   max-width: 380px;
   align-self: flex-start;
   margin: 40px 0 0 0;
+  background-color: #ffffff;
 }
 
 .table-search-tab .box-title {
@@ -375,11 +386,11 @@ input[type="checkbox"]:checked::before {
 .table-search-tab input {
   width: 100%;
   max-width: 350px;
-  background: #0b0f19;
-  border: 1px solid #1e293b;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   padding: 8px 14px;
-  color: #e2e8f0;
+  color: #1e293b;
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -387,14 +398,14 @@ input[type="checkbox"]:checked::before {
 
 .table-search-tab input:focus {
   border-color: #0284c7;
-  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.2);
 }
 
 .contact-notice {
-  background-color: #0f172a;
-  border: 1px solid #1e293b;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-left: 4px solid #1877f2;
-  color: #94a3b8;
+  color: #64748b;
   padding: 14px 20px;
   margin: 20px auto;
   border-radius: 8px;
@@ -406,15 +417,15 @@ input[type="checkbox"]:checked::before {
 }
 
 .contact-link {
-  color: #38bdf8;
+  color: #0284c7;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.15s ease;
 }
 
 .contact-link:hover {
-  color: #0284c7; 
-  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+  color: #0369a1;
+  text-shadow: 0 0 8px rgba(2, 132, 199, 0.25);
 }
 
 @media screen and (max-width: 768px) {
@@ -558,6 +569,7 @@ div.hidden-element {
 @media print {
     body {
         background-color: #ffffff !important;
+        background-image: none !important;
         color: #000000 !important;
         padding: 0;
     }
@@ -644,7 +656,7 @@ form#calculator {
     margin: 20px auto;
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #94a3b8;
+    color: #475569;
     text-align: justify;
     text-justify: inter-word;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -653,7 +665,7 @@ form#calculator {
 }
 
 .explanation-text strong {
-    color: #e2e8f0;
+    color: #0f172a;
     font-weight: 600;
 }
 
@@ -680,5 +692,5 @@ form#calculator {
 }
 
 :root {
-    --graph-text: #FFFFFF;
+    --graph-text: #000000;
 }
