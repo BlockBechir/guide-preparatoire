@@ -305,10 +305,10 @@ function computeAverage(values) {
 function computeRang(avg, year, tab) {
   const selectedRangs = rangs[tab][year];
   if (!selectedRangs) return 0;
-  let r = 1, floorAvg = Math.floor(avg);
-  for (let i = floorAvg + 1; i < selectedRangs.length; i++) r += selectedRangs[i];
-  const fractional = 1 - (avg - floorAvg);
-  return Math.round(r + fractional * (selectedRangs[floorAvg] || 0));
+  let r = 1, roundAvg = Math.round(avg);
+  for (let i = roundAvg + 1; i < selectedRangs.length; i++) r += selectedRangs[i];
+  const fractional = 1 - (avg - roundAvg);
+  return Math.round(r + fractional * (selectedRangs[roundAvg] || 0));
 }
 
 function computeSubjectRang(grade, tab, year, index) {
@@ -317,14 +317,14 @@ function computeSubjectRang(grade, tab, year, index) {
   
   const scaledGrade = (year === "2025") ? grade * 2 : grade;  
   let r = 0;
-  let floorGrade = Math.floor(scaledGrade);
+  let roundGrade = Math.round(scaledGrade);
   
-  for (let i = floorGrade + 1; i < selectedRangs.length; i++) {
+  for (let i = roundGrade + 1; i < selectedRangs.length; i++) {
     r += selectedRangs[i];
   }
   
-  const fractional = 1 - (scaledGrade - floorGrade);
-  return Math.round(r + 1 + fractional * (selectedRangs[floorGrade] || 0));
+  const fractional = 1 - (scaledGrade - roundGrade);
+  return Math.round(r + 1 + fractional * (selectedRangs[roundGrade] || 0));
 }
 
 function update() {

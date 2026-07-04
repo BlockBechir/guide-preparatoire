@@ -109,11 +109,11 @@
       </div>
     </div>
     <p class="remarque">
-      L'application a été rigoureusement testée avec les notes réelles des candidats des sessions 2024 and 2025, confirmant la précision exacte de ses calculs, veuillez prévoir une marge d'erreur maximale de 5 rangs.
+      L'application a été rigoureusement testée avec les notes réelles des candidats des sessions 2024 and 2025, confirmant la précision exacte de ses calculs, veuillez prévoir une marge d'erreur maximale de 3%.
       Elle est développé par un étudiant de la promotion 2026 de l'Institut Préparatoire aux Études d'Ingénieurs de Bizerte (IPEIB).
     </p>
     <h1>Comment le calcul d'un rang est fait?</h1>
-  <p class="explanation-text" style="text-align: center; font-weight: 600; margin-bottom: 10px; color: #e2e8f0;">
+  <p class="repar">
       Répartition des candidats selon les moyennes (Rapport du Jury 2025):
   </p>
     <canvas id="chart" width="800" height="450"></canvas>
@@ -126,6 +126,13 @@
     <p class="contact-notice">
       Si vous connaissez certains rangs manquants, veuillez me contacter ici : 
       <a href="https://facebook.com/ahmedbechir.tebourbi" target="_blank" class="contact-link">Facebook</a>
+    </p>
+    <p class="contact-notice">
+        <b>REMARQUE :</b> Certaines filières ont été éliminées pour certaines sections, conformément aux nouvelles capacités d'accueil de 2026.<br>
+        <i>Exemple :</i><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- Mécatronique (ENISo) pour la section PC<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- Medjez El Bab pour la section MP<br>
+        Chaque tableau inclut toutes les filières disponibles pour chaque section. Si la filière recherchée n'y figure pas, cela signifie qu'elle n'est pas ouverte à votre section.
     </p>
     <div class="table-search-tab">
       <div class="box-title">STATISTIQUES ET FILTRES</div>
@@ -151,7 +158,7 @@
                 <th>Institution</th>
                 <th>Filiére</th>
                 <th>Rang (2025)</th>
-                <th>Capacité</th>
+                <th>Capacité (2026)</th>
             </tr>
         </thead>
         <tbody>
@@ -176,12 +183,12 @@
             <tr>
               <td>Télécommunications</td>
               <td>488</td>
-              <td>32</td>
+              <td>26</td>
             </tr>
             <tr>
               <td>Informatique</td>
               <td>443</td>
-              <td>26</td>
+              <td>32</td>
             </tr>
             <tr>
               <td data-subname="MINDS Minds minds">Modelisation pour L'industrie et Services</td>
@@ -211,13 +218,13 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>879</td>
-              <td>21</td>
+              <td>22</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="ENIB Enib enib">École Nationale d'Ingenieurs de Bizerte</td>
               <td data-subname="GC">Génie Civil</td>
               <td>1327</td>
-              <td>5</td>
+              <td>3</td>
             </tr>
             <tr>
               <td data-subname="GI">Génie Industriel</td>
@@ -227,7 +234,7 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>1313</td>
-              <td>15</td>
+              <td>16</td>
             </tr>
             <tr>
               <td rowspan="1" data-subname="ENSI Ensi ensi">École Nationale des Sciences de l'Informatique</td>
@@ -245,12 +252,12 @@
               <td rowspan="6" data-subname="ENSIT Ensit ensit">École Nationale Supérieure d'Ingenieurs de Tunis</td>
               <td data-subname="GC">Génie Civil</td>
               <td>1320</td>
-              <td>15</td>
+              <td>8</td>
             </tr>
             <tr>
               <td data-subname="GE">Génie Electrique</td>
               <td>1096</td>
-              <td>30</td>
+              <td>25</td>
             </tr>
             <tr>
               <td data-subname="GI">Génie Industriel</td>
@@ -265,7 +272,7 @@
             <tr>
               <td data-subname="GMAM">Génie Mathématiques Appliquées et Modélisation</td>
               <td>818</td>
-              <td>15</td>
+              <td>18</td>
             </tr>
             <tr>
               <td>Informatique</td>
@@ -302,18 +309,18 @@
             <tr>
               <td data-subname="GEN">Génie Energétique et Technologies de l'Environment</td>
               <td>indisponible</td>
-              <td>4</td>
+              <td>2</td>
             </tr>
             <tr>
               <td data-subname="GEM">Génie Electromécanique</td>
               <td>indisponible</td>
-              <td>6</td>
+              <td>2</td>
             </tr>
             <tr>
               <td rowspan="5" data-subname="ENIG Enig enig">École Nationale d’Ingénieurs de Gabès</td>
               <td data-subname="GCP">Génie Chimique-Procédés</td>
               <td>1301</td>
-              <td>4</td>
+              <td>1</td>
             </tr>
             <tr>
               <td data-subname="GC">Génie Civil</td>
@@ -328,12 +335,12 @@
             <tr>
               <td data-subname="GEA">Génie Electrique-Automatique</td>
               <td>1324</td>
-              <td>22</td>
+              <td>25</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>indisponible</td>
-              <td>5</td>
+              <td>1</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENIM Enim enim">École Nationale d’Ingénieurs de Monastir</td>
@@ -349,7 +356,7 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>1269</td>
-              <td>25</td>
+              <td>27</td>
             </tr>
             <tr>
               <td data-subname="GT">Génie Textile</td>
@@ -371,12 +378,12 @@
             <tr>
               <td>Génie Informatique</td>
               <td>774</td>
-              <td>40</td>
+              <td>42</td>
             </tr>
             <tr>
               <td data-subname="GMMI">Génie des Matériaux et Management Industriel</td>
               <td>1305</td>
-              <td>15</td>
+              <td>5</td>
             </tr>
             <tr>
               <td data-subname="GE">Génie Electrique</td>
@@ -393,7 +400,7 @@
             <tr>
               <td data-subname="GP">Génie Productique</td>
               <td>1274</td>
-              <td>8</td>
+              <td>10</td>
             </tr>
             <tr>
               <td data-subname="GTE">Génie Telecommunications Embarquées</td>
@@ -413,7 +420,7 @@
             <tr>
               <td data-subname="ME">Mécatronique</td>
               <td>937</td>
-              <td>14</td>
+              <td>25</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENETCOM Enetcom enetcom">École Nationale d’Électronique et des Télécommunications de Sfax</td>
@@ -424,7 +431,7 @@
             <tr>
               <td data-subname="GII">Génie Informatique Industrielle</td>
               <td>940</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td>Génie des Télécommunications</td>
@@ -440,7 +447,7 @@
               <td rowspan="1" data-subname="ENSTABC">École Nationale des Sciences et Technologies Avancées de Borj Cedria</td>
               <td data-subname="TA Ta ta">Technologies Avancées</td>
               <td>1257</td>
-              <td>47</td>
+              <td>50</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="INAT Inat inat">Institut National Agronomique de Tunisie</td>
@@ -451,7 +458,7 @@
             <tr>
               <td data-subname="EA">Économie Agricole</td>
               <td>1315</td>
-              <td>5</td>
+              <td>2</td>
             </tr>
             <tr>
               <td>Génie Rural, Eaux et Forêts</td>
@@ -459,54 +466,16 @@
               <td>2</td>
             </tr>
             <tr>
-              <td rowspan="2" data-subname="FST Fst fst">Facultés des Sciences de Tunis</td>
+              <td rowspan="1" data-subname="FST Fst fst">Facultés des Sciences de Tunis</td>
               <td data-subname="CAI Cai cai">Chimie Analytique et Instrumentation</td>
               <td>1139</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>Géosciences</td>
-              <td>indisponible</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td rowspan="3" data-subname="ESIMB Esimb esimb">École Supérieure des Ingénieurs de Medjez El Bab</td>
-              <td data-subname="GMAI">Génie Mécanique et Agro-Industriel</td>
-              <td>indisponible</td>
               <td>5</td>
-            </tr>
-            <tr>
-              <td>Topographie</td>
-              <td>indisponible</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>Hydrolique et Aménagement</td>
-              <td>indisponible</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td rowspan="2" data-subname="ISACM Isacm isacm">Institut Supérieur Agronomique de Chott-Mariem</td>
-              <td data-subname="HO">Horticulture</td>
-              <td>indisponible</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td data-subname="AP">Aménagement du Paysage</td>
-              <td>indisponible</td>
-              <td>3</td>
             </tr>
               <tr>
               <td rowspan="1" data-subname="ESAM Esam esam">École Supérieure d’Agriculture de Mograne</td>
               <td data-subname="ER Er er">Economie Rurale</td>
               <td>indisponible</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td rowspan="1" data-subname="ESIAT Esiat esiat">École Supérieure des Industries Alimentaires de Tunis</td>
-              <td data-subname="AA">Agro-alimentaire</td>
-              <td>indisponible</td>
-              <td>2</td>
+              <td>1</td>
             </tr>
         </tbody>
     </table>
@@ -518,7 +487,7 @@
                 <th>Institution</th>
                 <th>Filiére</th>
                 <th>Rang (2024)</th>
-                <th>Capacité (2025)</th>
+                <th>Capacité (2026)</th>
             </tr>
         </thead>
         <tbody>
@@ -532,7 +501,7 @@
               <td rowspan="1" data-subname="SUPCOM Supcom supcom">École Supérieure des Communications de Tunis</td>
               <td>Télécommunications</td>
               <td>84</td>
-              <td>44</td>
+              <td>46</td>
             </tr>
             <tr>
               <td rowspan="9" data-subname="ENIT Enit enit">École Nationale d’Ingénieurs de Tunis</td>
@@ -548,7 +517,7 @@
             <tr>
               <td>Informatique</td>
               <td>126</td>
-              <td>20</td>
+              <td>10</td>
             </tr>
             <tr>
               <td data-subname="MINDS Minds minds">Modelisation pour L'industrie et Services</td>
@@ -578,7 +547,7 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>612</td>
-              <td>10</td>
+              <td>11</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="ENIB Enib enib">École Nationale d'Ingenieurs de Bizerte</td>
@@ -600,18 +569,18 @@
               <td rowspan="1" data-subname="ENSI Ensi ensi">École Nationale des Sciences de l'Informatique</td>
               <td>Informatique</td>
               <td>118</td>
-              <td>25</td>
+              <td>30</td>
             </tr>
             <tr>
-              <td rowspan="6" data-subname="ENSIT Ensit ensit">École Nationale Supérieure d'Ingenieurs de Tunis</td>
+              <td rowspan="5" data-subname="ENSIT Ensit ensit">École Nationale Supérieure d'Ingenieurs de Tunis</td>
               <td data-subname="GC">Génie Civil</td>
               <td>873</td>
-              <td>13</td>
+              <td>10</td>
             </tr>
             <tr>
               <td data-subname="GE">Génie Electrique</td>
               <td>609</td>
-              <td>15</td>
+              <td>6</td>
             </tr>
             <tr>
               <td data-subname="GI">Génie Industriel</td>
@@ -619,40 +588,35 @@
               <td>30</td>
             </tr>
             <tr>
-              <td data-subname="GM">Génie Mécanique</td>
-              <td>668</td>
-              <td>5</td>
-            </tr>
-            <tr>
               <td data-subname="GMAM">Génie Mathématiques Appliquées et Modélisation</td>
               <td>372</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td>Informatique</td>
               <td>229</td>
-              <td>12</td>
+              <td>16</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENICAR Enicar enicar">École Nationale d’Ingénieursde Carthage</td>
               <td data-subname="GSIL">Génie des Systèmes Industriels et Logistiques</td>
               <td>579</td>
-              <td>26</td>
+              <td>27</td>
             </tr>
             <tr>
               <td>Informatique</td>
               <td>258</td>
-              <td>37</td>
+              <td>36</td>
             </tr>
             <tr>
               <td data-subname="INTR">Infotronique</td>
               <td>367</td>
-              <td>16</td>
+              <td>17</td>
             </tr>
             <tr>
               <td data-subname="ME">Mécatronique</td>
               <td>564</td>
-              <td>17</td>
+              <td>18</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="ENIGAFSA ENIGafsa Enigafsa enigafsa">École Nationale d’Ingénieurs de Gafsa</td>
@@ -674,12 +638,12 @@
               <td rowspan="5" data-subname="ENIG Enig enig">École Nationale d’Ingénieurs de Gabès</td>
               <td data-subname="GCP">Génie Chimique-Procédés</td>
               <td>1028</td>
-              <td>22</td>
+              <td>25</td>
             </tr>
             <tr>
               <td data-subname="GC">Génie Civil</td>
               <td>994</td>
-              <td>30</td>
+              <td>35</td>
             </tr>
             <tr>
               <td data-subname="GCR">Génie des Communications et Réseaux</td>
@@ -689,33 +653,33 @@
             <tr>
               <td data-subname="GEA">Génie Electrique-Automatique</td>
               <td>871</td>
-              <td>25</td>
+              <td>27</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>961</td>
-              <td>15</td>
+              <td>19</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENIM Enim enim">École Nationale d’Ingénieurs de Monastir</td>
               <td data-subname="GE">Génie Electrique</td>
               <td>620</td>
-              <td>20</td>
+              <td>22</td>
             </tr>
             <tr>
               <td data-subname="GEN">Génie Energétique</td>
               <td>730</td>
-              <td>30</td>
+              <td>31</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>778</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="GT">Génie Textile</td>
               <td>1025</td>
-              <td>60</td>
+              <td>52</td>
             </tr>
 
             <tr>
@@ -749,7 +713,7 @@
               <td rowspan="4" data-subname="ENISO ENISo Eniso eniso">École Nationale d’Ingénieurs de Sousse</td>
               <td data-subname="GEI">Electronique Industrielle</td>
               <td>592</td>
-              <td>10</td>
+              <td>8</td>
             </tr>
             <tr>
               <td data-subname="GP">Génie Productique</td>
@@ -759,7 +723,7 @@
             <tr>
               <td data-subname="IA">Informatique Appliquée</td>
               <td>256</td>
-              <td>7</td>
+              <td>5</td>
             </tr>
             <tr>
               <td data-subname="ME">Mécatronique</td>
@@ -775,7 +739,7 @@
             <tr>
               <td data-subname="GII">Génie Informatique Industrielle</td>
               <td>436</td>
-              <td>28</td>
+              <td>29</td>
             </tr>
             <tr>
               <td>Génie des Télécommunications</td>
@@ -791,7 +755,7 @@
               <td rowspan="1" data-subname="ENSTABC">École Nationale des Sciences et Technologies Avancées de Borj Cedria</td>
               <td data-subname="TA">Technologies Avancées</td>
               <td>708</td>
-              <td>33</td>
+              <td>38</td>
             </tr>
             <tr>
               <td rowspan="2" data-subname="FST Fst fst">Faculté des Sciences de Tunis</td>
@@ -802,35 +766,24 @@
             <tr>
               <td data-subname="GI">Géosciences</td>
               <td>868</td>
-              <td>12</td>
+              <td>8</td>
             </tr>
             <tr>
             <tr>
               <td rowspan="3" data-subname="ESIMB Esimb esimb">École Supérieure des Ingénieurs de Medjez El Bab</td>
               <td data-subname="GMAI">Génie Mécanique et Agro-Industriel</td>
               <td>1095</td>
-              <td>7</td>
+              <td>10</td>
             </tr>
             <tr>
               <td>Topographie</td>
               <td>999</td>
-              <td>11</td>
+              <td>10</td>
             </tr>
             <tr>
               <td>Hydraulique et Aménagement</td>
               <td>1030</td>
-              <td>13</td>
-            </tr>
-            <tr>
-              <td rowspan="2" data-subname="ISACM Isacm isacm">Institut Supérieur Agronomique de Chott-Mariem</td>
-              <td data-subname="HO">Horticulture</td>
-              <td>1004</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td data-subname="AP">Aménagement du Paysage</td>
-              <td>1012</td>
-              <td>3</td>
+              <td>10</td>
             </tr>
             <tr>
               <td rowspan="1" data-subname="ESIAT Esiat esiat">École Supérieure des Industries Alimentaires de Tunis</td>
@@ -842,33 +795,33 @@
               <td rowspan="1" data-subname="ESAKEF ESAKef Esakef esakef">École Supérieure d’Agriculture du Kef</td>
               <td data-subname="SA">Sciences Agricoles</td>
               <td>indisponible</td>
-              <td>5</td>
+              <td>2</td>
             </tr>
             <tr>
               <td rowspan="7" data-subname="INAT Inat inat">Institut National Agronomique de Tunisie</td>
               <td data-subname="SPV Spv spv">Sciences de la production Végétale</td>
               <td>1028</td>
-              <td>5</td>
+              <td>3</td>
             </tr>
             <tr>
               <td>Phytiatrie</td>
               <td>1029</td>
-              <td>5</td>
+              <td>1</td>
             </tr>
             <tr>
               <td data-subname="PA Pa pa">Production Animale</td>
               <td>indisponible</td>
-              <td>5</td>
+              <td>1</td>
             </tr>
             <tr>
               <td data-subname="GREF Gref gref">Génie Rural, Eaux et Forêts</td>
               <td>indisponible</td>
-              <td>5</td>
+              <td>2</td>
             </tr>
             <tr>
               <td data-subname="AA">Agro-alimentaire</td>
               <td>972</td>
-              <td>5</td>
+              <td>2</td>
             </tr>
             <tr>
               <td>Halieutique</td>
@@ -885,7 +838,7 @@
                 <th>Institution</th>
                 <th>Filiére</th>
                 <th>Rang (2025)</th>
-                <th>Capacité</th>
+                <th>Capacité (2026)</th>
             </tr>
         </thead>
         <tbody>
@@ -899,7 +852,7 @@
               <td rowspan="1" data-subname="SUPCOM Supcom supcom">École Supérieure des Communications de Tunis</td>
               <td>Télécommunications</td>
               <td>31</td>
-              <td>20</td>
+              <td>18</td>
             </tr>
             <tr>
               <td rowspan="9" data-subname="ENIT Enit enit">École Nationale d’Ingénieurs de Tunis</td>
@@ -930,7 +883,7 @@
             <tr>
               <td data-subname="GE">Génie Electrique</td>
               <td>176</td>
-              <td>18</td>
+              <td>17</td>
             </tr>
             <tr>
               <td data-subname="GHE">Génie Hydraulique et Environment</td>
@@ -945,77 +898,77 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>305</td>
-              <td>18</td>
+              <td>19</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="ENIB Enib enib">École Nationale d'Ingenieurs de Bizerte</td>
               <td data-subname="GC">Génie Civil</td>
               <td>665</td>
-              <td>8</td>
+              <td>7</td>
             </tr>
             <tr>
               <td data-subname="GI">Génie Industriel</td>
               <td>342</td>
-              <td>4</td>
+              <td>3</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>567</td>
-              <td>10</td>
+              <td>8</td>
             </tr>
             <tr>
               <td rowspan="1" data-subname="ENSI Ensi ensi">École Nationale des Sciences de l'Informatique</td>
               <td>Informatique</td>
               <td>78</td>
-              <td>25</td>
+              <td>20</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENSIT Ensit ensit">École Nationale Supérieure d'Ingenieurs de Tunis</td>
               <td data-subname="GC">Génie Civil</td>
               <td>654</td>
-              <td>11</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="GE">Génie Electrique</td>
               <td>394</td>
-              <td>30</td>
+              <td>24</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>578</td>
-              <td>45</td>
+              <td>35</td>
             </tr>
             <tr>
               <td>Informatique</td>
               <td>197</td>
-              <td>13</td>
+              <td>14</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENICAR Enicar enicar">École Nationale d’Ingénieursde Carthage</td>
               <td data-subname="GSIL">Génie des Systèmes Industriels et Logistiques</td>
               <td>314</td>
-              <td>10</td>
+              <td>9</td>
             </tr>
             <tr>
               <td>Informatique</td>
               <td>149</td>
-              <td>13</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="INTR">Infotronique</td>
               <td>227</td>
-              <td>6</td>
+              <td>5</td>
             </tr>
             <tr>
               <td data-subname="ME">Mécatronique</td>
               <td>284</td>
-              <td>17</td>
+              <td>19</td>
             </tr>
             <tr>
               <td rowspan="2" data-subname="ENIGAFSA ENIGafsa Enigafsa enigafsa">École Nationale d’Ingénieurs de Gafsa</td>
               <td data-subname="GCIM">Génie Energétique et Technologies de l'Environment</td>
               <td>646</td>
-              <td>4</td>
+              <td>2</td>
             </tr>
             <tr>
               <td data-subname="GEM">Génie Electromécanique</td>
@@ -1026,16 +979,17 @@
               <td rowspan="5" data-subname="ENIG Enig enig">École Nationale d’Ingénieurs de Gabès</td>
               <td data-subname="GCP">Génie Chimique-Procédés</td>
               <td>685</td>
-              <td>4</td>
+              <td>5</td>
             </tr>
             <tr>
               <td data-subname="GC">Génie Civil</td>
               <td>690</td>
-              <td>15</td>
+              <td>10</td>
             </tr>
             <tr>
               <td data-subname="GCR">Génie des Communications et Réseaux</td>
               <td>543</td>
+              <td>20</td>
             </tr>
             <tr>
               <td data-subname="GEA">Génie Electrique-Automatique</td>
@@ -1045,50 +999,50 @@
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>622</td>
-              <td>20</td>
+              <td>19</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENIM Enim enim">École Nationale d’Ingénieurs de Monastir</td>
               <td data-subname="GE">Génie Electrique</td>
               <td>363</td>
-              <td>25</td>
+              <td>23</td>
             </tr>
             <tr>
               <td data-subname="GEN">Génie Energétique</td>
               <td>338</td>
-              <td>10</td>
+              <td>9</td>
             </tr>
             <tr>
               <td data-subname="GM">Génie Mécanique</td>
               <td>527</td>
-              <td>40</td>
+              <td>36</td>
             </tr>
             <tr>
               <td data-subname="GT">Génie Textile</td>
               <td>690</td>
-              <td>20</td>
+              <td>16</td>
             </tr>
 
             <tr>
               <td rowspan="5" data-subname="ENIS Enis enis">École Nationale d’Ingénieurs de Sfax</td>
               <td data-subname="GC">Génie Civil</td>
               <td>686</td>
-              <td>25</td>
+              <td>20</td>
             </tr>
             <tr>
               <td data-subname="GEM">Génie Electromécanique</td>
               <td>496</td>
-              <td>24</td>
+              <td>25</td>
             </tr>
             <tr>
               <td>Génie Informatique</td>
               <td>203</td>
-              <td>10</td>
+              <td>8</td>
             </tr>
             <tr>
               <td data-subname="GMMI">Génie des Matériaux et Management Industriel</td>
               <td>596</td>
-              <td>9</td>
+              <td>10</td>
             </tr>
             <tr>
               <td data-subname="GE">Génie Electrique</td>
@@ -1100,7 +1054,7 @@
               <td rowspan="6" data-subname="ENISO ENISo Eniso eniso">École Nationale d’Ingénieurs de Sousse</td>
               <td data-subname="GEI">Electronique Industrielle</td>
               <td>349</td>
-              <td>12</td>
+              <td>15</td>
             </tr>
             <tr>
               <td data-subname="GP">Génie Productique</td>
@@ -1120,11 +1074,12 @@
             <tr>
               <td data-subname="ISEA">Ingénierie des Systémes embarquées Automobiles</td>
               <td>265</td>
+              <td>9</td>
             </tr>
             <tr>
               <td data-subname="ME">Mécatronique</td>
               <td>188</td>
-              <td>12</td>
+              <td>18</td>
             </tr>
             <tr>
               <td rowspan="4" data-subname="ENETCOM Enetcom enetcom">École Nationale d’Électronique et des Télécommunications de Sfax</td>
@@ -1135,7 +1090,7 @@
             <tr>
               <td data-subname="GII">Génie Informatique Industrielle</td>
               <td>359</td>
-              <td>22</td>
+              <td>19</td>
             </tr>
             <tr>
               <td>Génie des Télécommunications</td>
@@ -1151,7 +1106,7 @@
               <td rowspan="1" data-subname="ENSTABC">École Nationale des Sciences et Technologies Avancées de Borj Cedria</td>
               <td data-subname="TA">Technologies Avancées</td>
               <td>480</td>
-              <td>5</td>
+              <td>2</td>
             </tr>
             <tr>
               <td rowspan="3" data-subname="ESIMB Esimb esimb">École Supérieure des Ingénieurs de Medjez El Bab</td>
@@ -1162,7 +1117,7 @@
             <tr>
               <td>Topographie</td>
               <td>indisponible</td>
-              <td>2</td>
+              <td>5</td>
             </tr>
         </tbody>
     </table>
@@ -1174,7 +1129,7 @@
                 <th>Institution</th>
                 <th>Filiére</th>
                 <th>Rang (2025)</th>
-                <th>Capacité</th>
+                <th>Capacité (2026)</th>
             </tr>
         </thead>
         <tbody>
@@ -1182,48 +1137,48 @@
               <td rowspan="7" data-subname="INAT Inat inat">Institut National Agronomique de Tunisie</td>
               <td data-subname="SPV Spv spv">Sciences de la production Végétale</td>
               <td>137</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td>Phytiatrie</td>
               <td>168</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="PA Pa pa">Production Animale</td>
               <td>133</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="EA Ea ea">Économie Agricole</td>
               <td>43</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="GREF Gref gref">Génie Rural, Eaux et Forêts</td>
               <td>48</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="AA">Agro-alimentaire</td>
               <td>60</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td>Halieutique</td>
               <td>192</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td rowspan="2" data-subname="FST Fst fst">Faculté des Sciences de Tunis</td>
               <td data-subname="CAI Cai cai">Chimie Analytique et Instrumentation</td>
               <td>66</td>
-              <td>9</td>
+              <td>5</td>
             </tr>
             <tr>
               <td data-subname="GI">Géosciences</td>
               <td>107</td>
-              <td>17</td>
+              <td>22</td>
             </tr>
             <tr>
               <td rowspan="1" data-subname="ENIGAFSA ENIGafsa Enigafsa enigafsa">École Nationale d’Ingénieurs de Gafsa</td>
@@ -1232,21 +1187,31 @@
               <td>9</td>
             </tr>
             <tr>
-              <td rowspan="2" data-subname="ISACM Isacm isacm">Institut Supérieur Agronomique de Chott-Mariem</td>
+              <td rowspan="3" data-subname="ISACM Isacm isacm">Institut Supérieur Agronomique de Chott-Mariem</td>
               <td data-subname="HO">Horticulture</td>
               <td>218</td>
-              <td>10</td>
+              <td>12</td>
             </tr>
             <tr>
               <td data-subname="AP">Aménagement du Paysage</td>
               <td>242</td>
-              <td>10</td>
+              <td>11</td>
             </tr>
             <tr>
-              <td rowspan="1" data-subname="ESAM Esam esam">École Supérieure d’Agriculture de Mograne</td>
-              <td data-subname="ER Er er">Economie Rurale</td>
+              <td data-subname="PA">Production Animale</td>
+              <td>nouvelle</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td rowspan="2" data-subname="ESAM Esam esam">École Supérieure d’Agriculture de Mograne</td>
+              <td data-subname="ER">Economie Rurale</td>
               <td>211</td>
-              <td>25</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td data-subname="PA">Production Agricole</td>
+              <td>nouvelle</td>
+              <td>11</td>
             </tr>
             <tr>
               <td rowspan="1" data-subname="ENIG Enig enig">École Nationale d’Ingénieurs de Gabès</td>
@@ -1281,7 +1246,13 @@
               <td rowspan="1" data-subname="ESAMA">École Supérieure d’Agriculture de Mateur</td>
               <td data-subname="PAF">Production animale et fourragère</td>
               <td>252</td>
-              <td>17</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td rowspan="3" data-subname="ESIMB Esimb esimb">École Supérieure des Ingénieurs de Medjez El Bab</td>
+              <td data-subname="GMAI">Hydrolique et Aménagement</td>
+              <td>Nouvelle</td>
+              <td>5</td>
             </tr>
         </tbody>
     </table>
