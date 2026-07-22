@@ -159,14 +159,31 @@ input[type="number"]:focus {
     box-shadow: 0 4px 10px -4px rgba(24, 15, 16, 0.18);
 }
 
-.theme-group {
-    position: absolute;
+/* Global theme toggle — fixed to the viewport rather than nested in any
+   tab's content, so it's reachable no matter which tab is active. Placed
+   bottom-left, mirroring the watermark at bottom-right, so it stays clear
+   of the top tab navigation on narrow screens. */
+.global-theme-toggle {
+    position: fixed;
     bottom: 15px;
-    right: 15px;
+    left: 15px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px -4px rgba(24, 15, 16, 0.18);
 }
 
-.main-box:has(.theme-group) {
-    padding-bottom: 50px;
+.theme-toggle-icon {
+    font-size: 13px;
+    line-height: 1;
+    color: var(--text-faint);
+    user-select: none;
+    pointer-events: none;
 }
 
 select {
@@ -595,6 +612,17 @@ div.hidden-element {
   margin-bottom: 8px;
 }
 
+/* #guide (the rank-tables tab) shares the same typo'd "page-content-rapper"
+   class as #schools, so the base .page-content-wrapper rule never matches
+   it either. Constraining it explicitly here, at desktop size, keeps it
+   consistent with #schools rather than leaving it unconstrained. */
+#guide {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .school-description-card {
   position: relative;
   background: var(--paper-panel);
@@ -998,6 +1026,13 @@ div.hidden-element {
         padding: 12px;
     }
 
+    /* On narrow screens the watermark text is wide enough to run under
+       the toggle at its desktop position — stack the toggle above it
+       instead of letting them overlap. */
+    .global-theme-toggle {
+        bottom: 60px;
+    }
+
     .main-box {
         width: 100%;
         max-width: 100%;
@@ -1074,6 +1109,17 @@ div.hidden-element {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+    /* #guide shares the same typo'd "page-content-rapper" class as
+       #schools, so it never got the explicit width constraint either.
+       Without this, an auto-sized table wanting more room than the
+       viewport drags the whole tab wider instead of just letting the
+       wrapper above scroll internally. */
+    #guide {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
     .rank-table {

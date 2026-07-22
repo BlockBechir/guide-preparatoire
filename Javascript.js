@@ -725,7 +725,7 @@ const ctx = canvas.getContext('2d');
 
 const data = rangsMP[2025];
 
-const padding = { top: 40, right: 30, bottom: 50, left: 60 };
+const padding = { top: 40, right: 30, bottom: 50, left: 20 };
 const chartWidth = canvas.width - padding.left - padding.right;
 const chartHeight = canvas.height - padding.top - padding.bottom;
 
@@ -746,6 +746,10 @@ function drawChart() {
     // toggle checkbox isn't present in the page — the chart still needs
     // to draw either way.
     const graphTextColor = themeButton?.checked ? '#FFFFFF' : '#000000';
+    // Bar fill also follows the active theme: the dark theme's primary
+    // crimson is a brighter shade than the light theme's, so the bars
+    // switch along with everything else instead of staying fixed.
+    const barColor = themeButton?.checked ? '#ff3b52' : '#c8102e';
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -757,34 +761,12 @@ function drawChart() {
     ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
     ctx.stroke();
 
-    ctx.fillStyle = graphTextColor;
-    ctx.font = '12px sans-serif';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-
-    const yTicks = 5;
-    for (let i = 0; i <= yTicks; i++) {
-        const val = Math.round((maxVal / yTicks) * i);
-        const y = canvas.height - padding.bottom - (chartHeight / yTicks) * i;
-        ctx.fillStyle = graphTextColor;
-        ctx.fillText(val, padding.left - 10, y);
-
-        if (i > 0) {
-            ctx.strokeStyle = 'rgba(128, 128, 128, 0.25)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(padding.left, y);
-            ctx.lineTo(canvas.width - padding.right, y);
-            ctx.stroke();
-        }
-    }
-
     data.forEach((val, n) => {
         const x = padding.left + n * (barWidth + barSpacing);
         const barHeight = (val / maxVal) * chartHeight;
         const y = canvas.height - padding.bottom - barHeight;
 
-        ctx.fillStyle = '#c8102e';
+        ctx.fillStyle = barColor;
         ctx.fillRect(x, y, barWidth, barHeight);
 
         ctx.fillStyle = graphTextColor;
