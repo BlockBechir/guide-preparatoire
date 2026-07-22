@@ -1,13 +1,82 @@
+/* ==========================================================================
+   TYPE — IBM Plex trio: Serif for editorial authority (school names),
+   Sans for body copy, Mono for spec/data values. Chosen because the Plex
+   family was designed by IBM specifically for technical communication —
+   it is the actual house type of engineering documentation, not a generic
+   UI stack.
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+
+/* ==========================================================================
+   DESIGN TOKENS — "redline" palette.
+   Named for the engineering practice of marking up a drawing in red ink
+   on white vellum. The page is genuinely bright (paper white/cream) with
+   genuinely dark zones built in on purpose — card headers, one chip tier,
+   one lane of every Standard/Double-Diplôme fork — rather than a dark
+   page with light-colored text sprinkled on top. Crimson is the only
+   accent hue; black and white/paper carry the rest of the contrast.
+   ========================================================================== */
+:root {
+    --font-display: "IBM Plex Serif", Georgia, serif;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+    --paper: #f6efe4;
+    --paper-panel: #fffcf7;
+    --paper-inset: #efe3d1;
+    --paper-raised: #e7d8c1;
+
+    --black: #180f10;
+    --charcoal: #2c1e1f;
+
+    --line: #ddccb3;
+    --line-strong: #c7ac86;
+    --line-faint: #ebdec8;
+    --line-dark: #3c2b2b;
+
+    --text: #1e1213;
+    --text-muted: #6d5850;
+    --text-faint: #9c887e;
+    --text-on-dark: #f8ece2;
+    --text-on-dark-muted: #cdb3a9;
+
+    --crimson: #c8102e;
+    --crimson-dim: rgba(200, 16, 46, 0.09);
+    --crimson-line: rgba(200, 16, 46, 0.4);
+    --crimson-dark: #7a0d1f;
+    --crimson-dark-dim: rgba(122, 13, 31, 0.08);
+    --crimson-bright: #ff3b52;
+
+    --success: #2f9e52;
+    --danger: var(--crimson-bright);
+
+    --radius: 3px;
+    --measure: 74ch;
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+* { box-sizing: border-box; }
+
 body {
-    background-color: #0b0f19;
-    color: #e2e8f0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-color: var(--paper);
+    color: var(--text);
+    font-family: var(--font-body);
     padding: 20px;
+    margin: 0;
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+a { color: var(--crimson); }
+
+/* ==========================================================================
+   FORM CONTROLS — calculator tab
+   ========================================================================== */
 .input-group {
     display: flex;
     align-items: center;
@@ -19,7 +88,8 @@ body {
     width: 150px;
     text-align: right;
     margin-right: 15px;
-    color: #94a3b8;
+    color: var(--text-muted);
+    font-size: 14px;
 }
 
 .input-group input {
@@ -29,61 +99,64 @@ body {
 }
 
 #result {
+    font-family: var(--font-mono);
     font-size: 1.4rem;
     margin-top: 15px;
-    font-weight: bold;
-    color: #38bdf8;
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    font-weight: 600;
+    color: var(--crimson);
 }
 
 .Refuse {
+    font-family: var(--font-mono);
     font-size: 1.4rem;
     margin-top: 15px;
-    font-weight: bold;
-    color: #d61313ba;
-    text-shadow: 0 0 10px rgba(214, 19, 19, 0.73);
+    font-weight: 600;
+    color: var(--danger);
 }
 
 .Admise {
+    font-family: var(--font-mono);
     font-size: 1.4rem;
     margin-top: 15px;
-    font-weight: bold;
-    color: #04da20ba;
-    text-shadow: 0 0 10px hsla(128, 96%, 44%, 0.729);
+    font-weight: 600;
+    color: var(--success);
 }
 
-#result2 {
+#result2,
+#result3 {
+    font-family: var(--font-mono);
     font-size: 1.1rem;
     margin-top: 5px;
-    color: #34d399;
+    color: var(--crimson-dark);
 }
 
 input[type="number"] {
-    border: 1px solid #1e293b;
-    background-color: #020617;
+    border: 1px solid var(--line-strong);
+    background-color: var(--paper-panel);
     padding: 8px;
     font-size: 16px;
-    border-radius: 4px;
-    color: #f8fafc;
+    font-family: var(--font-mono);
+    border-radius: 2px;
+    color: var(--text);
     text-align: left;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type="number"]:focus {
-    border-color: #0284c7;
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.3);
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 3px var(--crimson-dim);
 }
 
 .main-box {
     position: relative;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
     padding: 20px;
-    background-color: #0f172a;
+    background-color: var(--paper-panel);
     width: fit-content;
     margin: 20px auto;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px -4px rgba(24, 15, 16, 0.18);
 }
 
 .theme-group {
@@ -97,45 +170,76 @@ input[type="number"]:focus {
 }
 
 select {
-    border: 1px solid #1e293b;
-    background-color: #020617;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #f8fafc;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-panel);
+    box-shadow: 0 1px 2px rgba(24, 15, 16, 0.08);
+    padding: 10px 36px 10px 14px;
+    font-size: 15px;
+    font-family: var(--font-body);
+    border-radius: var(--radius);
+    color: var(--text);
     outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1L5 5L9 1' stroke='%236d5850' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+select:hover {
+    border-color: var(--crimson-line);
+    background-color: var(--paper-raised);
 }
 
 select:focus {
-    border-color: #0284c7;
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 3px var(--crimson-dim);
+}
+
+select option {
+    background-color: var(--paper-panel);
+    color: var(--text);
+}
+
+select option:checked,
+select option:hover {
+    background-color: var(--paper-raised);
+    color: var(--text);
 }
 
 .box-tab {
     cursor: pointer;
-    background-color: #0f172a;
-    color: #64748b;
-    border: 1px solid #1e293b;
+    background-color: var(--paper-panel);
+    color: var(--text-muted);
+    border: 1px solid var(--line-strong);
     padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 500;
+    border-radius: 2px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
     transition: all 0.15s ease;
 }
 
 .box-tab:hover {
-    color: #f8fafc;
-    background-color: #1e293b;
+    color: var(--text);
+    background-color: var(--paper-raised);
+    border-color: var(--crimson-line);
 }
 
 .box-tab.active {
-    background-color: #0284c7 !important;
-    color: #ffffff !important;
-    border-color: #0284c7;
-    box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+    background-color: var(--crimson) !important;
+    color: var(--text-on-dark) !important;
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 1px var(--crimson-line);
 }
 
 .input-group label:has(+ input + label) + input + label {
-    color: #f59e0b;
-    font-weight: 500;
+    color: var(--crimson-dark);
+    font-weight: 600;
     margin-left: 10px;
 }
 
@@ -144,7 +248,7 @@ input[type="checkbox"] {
     width: 40px;
     height: 20px;
     appearance: none;
-    background-color: #1e293b;
+    background-color: var(--line-strong);
     outline: none;
     border-radius: 10px;
     cursor: pointer;
@@ -152,7 +256,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-    background-color: #34d399;
+    background-color: var(--crimson);
 }
 
 input[type="checkbox"]::before {
@@ -163,7 +267,7 @@ input[type="checkbox"]::before {
     border-radius: 50%;
     top: 2px;
     left: 2px;
-    background-color: #f8fafc;
+    background-color: var(--paper-panel);
     transition: transform 0.15s ease;
 }
 
@@ -175,19 +279,19 @@ input[type="checkbox"]:checked::before {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    color: rgba(56, 189, 248, 0.25);
-    background: rgba(15, 23, 42, 0.6);
+    color: var(--text-on-dark-muted);
+    background: rgba(24, 15, 16, 0.85);
     padding: 6px 12px;
-    border: 1px solid rgba(56, 189, 248, 0.15);
-    border-radius: 6px;
+    border: 1px solid var(--crimson-line);
+    border-radius: 2px;
     backdrop-filter: blur(4px);
     pointer-events: none;
     user-select: none;
     z-index: 9999;
-    font-family: monospace;
 }
 
 .remarque {
@@ -195,82 +299,81 @@ input[type="checkbox"]:checked::before {
     margin: 15px auto 0 auto;
     font-size: 0.85rem;
     line-height: 1.4;
-    color: #64748b;
+    color: var(--text-faint);
     text-align: center;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--line);
     padding-top: 15px;
 }
 
+/* ==========================================================================
+   TABS
+   ========================================================================== */
 .tabs-container {
     display: flex;
     justify-content: center;
     gap: 8px;
     margin-bottom: 20px;
     width: 100%;
-    border-bottom: 1px solid #1e293b;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: 1px solid var(--line);
     padding-bottom: 15px;
 }
 
 .box-tab {
     flex: 1;
-    max-width: 80px;
+    max-width: 160px;
     text-align: center;
-    cursor: pointer;
-    background-color: #0f172a;
-    color: #64748b;
-    border: 1px solid #1e293b;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.15s ease;
-}
-
-.box-tab:hover {
-    color: #f8fafc;
-    background-color: #1e293b;
 }
 
 .box-title {
-    font-size: 20px;
-    font-weight: 700;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #64748b;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
     margin-bottom: 8px;
     align-self: flex-start;
     padding-left: 2px;
     text-align: center;
 }
 
+/* ==========================================================================
+   RANK TABLE
+   ========================================================================== */
 .rank-table {
   width: 100%;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-color: #0f172a;
+  font-family: var(--font-body);
+  background-color: var(--paper-panel);
   margin: 0 0 40px 0;
   max-width: 1200px;
-  border: 1px solid #1e293b;
-  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px -4px rgba(24, 15, 16, 0.15);
   margin-top: 0 !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
 
+/* Dark header bar deliberately breaks from the paper-white body of the
+   table — the same light/dark pairing used on the school cards. */
 .rank-table th {
-  background-color: #1e293b;
-  color: #64748b;
-  font-weight: 700;
-  font-size: 16px;
+  background-color: var(--black);
+  color: var(--text-on-dark);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   padding: 16px 24px;
   text-align: left;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 2px solid var(--crimson);
 }
 
 .rank-table th:nth-child(1) { width: 40%; }
@@ -281,7 +384,7 @@ input[type="checkbox"]:checked::before {
 .rank-table td {
   padding: 16px 24px;
   font-size: 15px;
-  color: #e2e8f0;
+  color: var(--text);
   vertical-align: middle;
   word-wrap: break-word;
 }
@@ -293,34 +396,30 @@ input[type="checkbox"]:checked::before {
 .rank-table tbody tr:has(td[rowspan]) td,
 .rank-table tbody tr:first-child td,
 .rank-table tbody tr td:first-child:not([rowspan]) {
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid var(--line);
 }
 
 .rank-table td[rowspan] {
   font-weight: 700;
-  color: #38bdf8;
-  font-size: 16px;
-  background-color: #0f172a;
+  color: var(--crimson);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  background-color: var(--paper-panel);
 }
 
-/* Bold + center the Rang and Capacité columns for every row.
-   Rows with rowspan:    td[rowspan] | td(filiere) | td(rang) | td(capacite)
-   Continuation rows:                  td(filiere) | td(rang) | td(capacite)
-   In both cases, rang = nth-last-child(2), capacite = last-child */
 .rank-table tbody td:nth-last-child(2),
 .rank-table tbody td:last-child {
+  font-family: var(--font-mono);
   font-weight: 700;
   text-align: center;
 }
 
-/* Rang column (second-to-last) — orange */
 .rank-table tbody td:nth-last-child(2) {
-  color: #f97316;
+  color: var(--crimson-dark);
 }
 
-/* Capacite column (last child) — blue */
 .rank-table tbody td:last-child {
-  color: #38bdf8;
+  color: var(--crimson);
 }
 
 .search-container {
@@ -333,29 +432,30 @@ input[type="checkbox"]:checked::before {
 .search-container input {
     width: 100%;
     max-width: 500px;
-    background: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 6px;
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
     padding: 10px 16px;
-    color: #e2e8f0;
+    color: var(--text);
+    font-family: var(--font-body);
     font-size: 15px;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-container input:focus {
-    border-color: #0284c7;
-    box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 3px var(--crimson-dim);
 }
 
 .table-search-tab {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--line-strong);
   border-bottom: none;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
   padding: 12px 20px;
   width: 100%;
   max-width: 380px;
@@ -364,40 +464,41 @@ input[type="checkbox"]:checked::before {
 }
 
 .table-search-tab .box-title {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #64748b;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
   margin-bottom: 8px;
 }
 
 .table-search-tab input {
   width: 100%;
   max-width: 350px;
-  background: #0b0f19;
-  border: 1px solid #1e293b;
-  border-radius: 6px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
   padding: 8px 14px;
-  color: #e2e8f0;
+  color: var(--text);
+  font-family: var(--font-body);
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .table-search-tab input:focus {
-  border-color: #0284c7;
-  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px var(--crimson-dim);
 }
 
 .contact-notice {
-  background-color: #0f172a;
-  border: 1px solid #1e293b;
-  border-left: 4px solid #1877f2;
-  color: #94a3b8;
+  background-color: var(--paper-panel);
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--crimson);
+  color: var(--text-muted);
   padding: 14px 20px;
   margin: 20px auto;
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: 0.9rem;
   line-height: 1.5;
   max-width: 1200px;
@@ -406,17 +507,492 @@ input[type="checkbox"]:checked::before {
 }
 
 .contact-link {
-  color: #38bdf8;
+  color: var(--crimson);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.15s ease;
 }
 
 .contact-link:hover {
-  color: #0284c7; 
-  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+  color: var(--crimson-dark);
 }
 
+#chart {
+    background-color: transparent;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+form#calculator {
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+.explanation-text {
+    max-width: 800px;
+    margin: 20px auto;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-align: justify;
+    text-justify: inter-word;
+    font-family: var(--font-body);
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.explanation-text strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.repar {
+    max-width: 800px;
+    margin: 20px auto 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: center;
+    font-family: var(--font-body);
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.hidden-element,
+.input-group.hidden-element,
+div.hidden-element {
+    display: none !important;
+}
+
+/* ==========================================================================
+   GUIDE DES ÉCOLES — technical datasheet / article layout
+   ========================================================================== */
+
+/* NOTE: the schools tab wrapper in the HTML carries the class
+   "page-content-rapper" (typo — missing the "w" in "wrapper"), so the
+   original .page-content-wrapper rule never actually matched it. Targeting
+   #schools directly here so the layout reliably applies; worth fixing the
+   typo in the HTML at some point regardless. */
+#schools,
+.page-content-wrapper {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 8px 0 60px;
+  /* Faint via-hole dot grid on the paper background — still reads as
+     technical substrate, just recolored for the light paper base. */
+  background-image: radial-gradient(var(--line-faint) 1.3px, transparent 1.3px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
+}
+
+#schools select {
+  margin-bottom: 8px;
+}
+
+.school-description-card {
+  position: relative;
+  background: var(--paper-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 0 32px 26px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 24px -10px rgba(24, 15, 16, 0.25);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* corner registration marks — a nod to technical drawings and printer's
+   crop marks; two opposing corners read as precise rather than four,
+   which would tip into decoration */
+.school-description-card::before,
+.school-description-card::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.school-description-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--crimson-bright);
+  border-left: 2px solid var(--crimson-bright);
+}
+
+.school-description-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--crimson);
+  border-right: 2px solid var(--crimson);
+}
+
+/* The card header is a deliberate dark bar bleeding to the card's own
+   edges — the clearest single instance of "bright page, dark zone" in
+   the whole layout, styled like the black title block on a real
+   technical drawing. */
+.school-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--black);
+  margin: 0 -32px 20px;
+  padding: 22px 32px 18px;
+  border-bottom: 3px solid var(--crimson);
+}
+
+/* Visually swap h3 (acronym) and h4 (full name) without touching markup:
+   the acronym becomes a small mono "spec code" kicker above the serif
+   headline, like a datasheet part-number over its title. */
+.school-title-group {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+}
+
+.school-title-group h3 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--crimson-bright);
+  text-transform: uppercase;
+}
+
+.school-title-group h3::before {
+  content: 'FICHE N\00B0  ';
+  color: var(--text-on-dark-muted);
+  font-weight: 500;
+}
+
+.school-title-group h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  line-height: 1.3;
+}
+
+.school-badges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding-top: 3px;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 2px;
+  background: transparent;
+  white-space: nowrap;
+}
+
+/* Badges sit on the dark header, so they read as light/outlined marks
+   against black rather than the reverse. */
+.badge-location {
+  color: var(--text-on-dark-muted);
+  border: 1px solid rgba(248, 236, 226, 0.3);
+}
+
+.badge-type {
+  color: var(--black);
+  background: var(--crimson);
+  border: 1px solid var(--crimson);
+  font-weight: 700;
+}
+
+/* stats grid restyled as a spec-sheet table on the paper body */
+.school-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background-color: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  margin-bottom: 26px;
+  overflow: hidden;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-inset);
+  padding: 12px 16px;
+  border-left: 2px solid var(--crimson-dark);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.school-body h5 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 30px 0 14px 0;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+}
+
+.school-body h5::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--crimson);
+  transform: rotate(45deg);
+}
+
+.school-body p {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: var(--measure);
+  margin: 0 0 16px 0;
+}
+
+/* lead paragraph — article drop-cap treatment on the overview text */
+.school-body > p:first-of-type {
+  font-size: 16.5px;
+  color: var(--text);
+}
+
+.school-body > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 2.7em;
+  font-weight: 600;
+  float: left;
+  line-height: 0.78;
+  padding-right: 8px;
+  padding-top: 5px;
+  color: var(--crimson);
+}
+
+/* ==========================================================================
+   FILIÈRE HIERARCHY
+   Tier 1 — .branch-list  : the named filière/domain (e.g. "Génie Civil")
+   Tier 2 — .filiere      : subsection labels (Options / DD / Cycle)
+   Tier 3 — .option-list  : the actual named item (option, partner, year)
+   Tier 4 — .sub-list     : Voie Standard vs Voie Double Diplôme — a real
+                            fork, laid out as two lanes, one light and
+                            one dark, rather than a colored list
+   Tiers are told apart by FILL (solid crimson / solid black / outline)
+   rather than by hue — one accent color, used with different weight,
+   the way a redlined drawing uses one red pen against black print and
+   white paper instead of a rainbow of markers.
+   ========================================================================== */
+
+.branch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.branch-list > li {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.branch-list > li:first-child { padding-top: 4px; }
+.branch-list > li:last-child { border-bottom: none; padding-bottom: 4px; }
+
+.branch-list > li > strong {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.branch-list > li > strong::before {
+  content: '\25C6';
+  display: inline-block;
+  color: var(--crimson);
+  font-size: 9px;
+  margin-right: 9px;
+  transform: translateY(-1px);
+}
+
+.filiere {
+  list-style: none;
+  padding: 2px 0 2px 18px;
+  margin: 14px 0 0 4px;
+  border-left: 1px dashed var(--line-strong);
+}
+
+.filiere > li {
+  margin-bottom: 18px;
+}
+
+.filiere > li:last-child { margin-bottom: 0; }
+
+.filiere > li > strong {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+/* Channel 1 — Options de Spécialisation: solid crimson, bright block */
+.filiere > li:nth-child(1) > strong {
+  color: var(--text-on-dark);
+  background: var(--crimson);
+  border: 1px solid var(--crimson);
+}
+
+/* Channel 2 — Opportunités de Double Diplôme: solid black, dark block
+   with crimson ink — the other half of the light/dark pairing */
+.filiere > li:nth-child(2) > strong {
+  color: var(--crimson-bright);
+  background: var(--black);
+  border: 1px solid var(--black);
+}
+
+/* Channel 3 — Organisation Du Cycle: outline only, lightest of the three */
+.filiere > li:nth-child(3) > strong {
+  color: var(--crimson-dark);
+  background: transparent;
+  border: 1px solid var(--crimson-line);
+}
+
+.filiere > li:nth-child(n+4) > strong {
+  color: var(--text-on-dark);
+  background: var(--crimson);
+  border: 1px solid var(--crimson);
+}
+
+.option-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Items inherit their section's tone as a left-border tick, so the
+   accent runs continuously from the chip above down through every
+   item it governs. */
+.option-list > li {
+  padding: 9px 14px;
+  border-left: 2px solid var(--crimson);
+  background: linear-gradient(90deg, var(--crimson-dim), transparent 45%);
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.filiere > li:nth-child(2) .option-list > li {
+  border-left-color: var(--crimson-dark);
+  background: linear-gradient(90deg, var(--crimson-dark-dim), transparent 45%);
+}
+
+.option-list > li > strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.sub-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px;
+}
+
+/* Voie Standard vs Voie Double Diplôme is a fork, not a list — it gets
+   the same light-lane / dark-lane treatment as the rest of the page:
+   Standard stays on paper, Double Diplôme drops onto black, both tied
+   together by the same crimson top border. */
+.sub-list li {
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--crimson);
+  border-radius: 2px;
+  padding: 13px 15px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.sub-list li:nth-child(1) {
+  background: var(--paper-inset);
+  color: var(--text-muted);
+}
+
+.sub-list li:nth-child(1) strong {
+  color: var(--crimson-dark);
+}
+
+.sub-list li:nth-child(2) {
+  background: var(--black);
+  border-color: var(--charcoal);
+  border-top-color: var(--crimson);
+  color: var(--text-on-dark-muted);
+}
+
+.sub-list li:nth-child(2) strong {
+  color: var(--crimson-bright);
+}
+
+.sub-list li strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 7px;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
 @media screen and (max-width: 768px) {
     body {
         padding: 12px;
@@ -477,7 +1053,7 @@ input[type="checkbox"]:checked::before {
     }
 
     .box-tab {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         padding: 6px 8px;
         min-width: 60px;
         max-width: none;
@@ -547,14 +1123,54 @@ input[type="checkbox"]:checked::before {
         width: 100%;
         box-sizing: border-box;
     }
+
+    .explanation-text {
+        max-width: 100%;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 15px auto;
+        padding: 0 16px;
+    }
+
+    #schools,
+    .page-content-wrapper {
+        background-size: 20px 20px;
+    }
+
+    .school-description-card {
+        padding: 0 16px 18px;
+    }
+
+    .school-header {
+        flex-direction: column;
+        margin: 0 -16px 20px;
+        padding: 18px 16px 16px;
+    }
+
+    .school-badges {
+        justify-content: flex-start;
+    }
+
+    .school-title-group h4 {
+        font-size: 21px;
+    }
+
+    .school-stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .school-body > p:first-of-type::first-letter {
+        font-size: 2.2em;
+    }
+
+    .sub-list {
+        grid-template-columns: 1fr;
+    }
 }
 
-.hidden-element,
-.input-group.hidden-element,
-div.hidden-element {
-    display: none !important;
-}
-
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
 @media print {
     body {
         background-color: #ffffff !important;
@@ -570,12 +1186,45 @@ div.hidden-element {
         display: none !important;
     }
 
-    #guide {
+    #guide,
+    #schools {
         display: block !important;
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        background-image: none !important;
+    }
+
+    .school-description-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+    }
+
+    .school-header {
+        background: #ffffff !important;
+        border-bottom: 2px solid #c8102e !important;
+    }
+
+    .school-description-card::before,
+    .school-description-card::after {
+        border-color: #c8102e !important;
+    }
+
+    .school-title-group h3,
+    .school-body h5::before {
+        color: #c8102e !important;
+    }
+
+    .school-title-group h4,
+    .school-body p,
+    .branch-list li,
+    .filiere li,
+    .option-list li,
+    .sub-list li {
+        color: #000000 !important;
     }
 
     .rank-table {
@@ -607,15 +1256,15 @@ div.hidden-element {
 
     .rank-table td[rowspan] {
         background-color: #ffffff !important;
-        color: #0284c7 !important;
+        color: #c8102e !important;
     }
 
     .rank-table tbody td:nth-last-child(2) {
-        color: #c2410c !important;
+        color: #7a0d1f !important;
     }
 
     .rank-table td:last-child {
-        color: #0284c7 !important;
+        color: #c8102e !important;
     }
 
     .remarque {
@@ -623,77 +1272,15 @@ div.hidden-element {
         border-top: 1px solid #cbd5e1 !important;
         page-break-inside: avoid !important;
     }
-}
 
-#chart {
-    background-color: transparent;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-form#calculator {
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
-}
-
-.explanation-text {
-    max-width: 800px;
-    margin: 20px auto;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #94a3b8;
-    text-align: justify;
-    text-justify: inter-word;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.repar {
-    max-width: 800px;
-    margin: 20px auto;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.6;
-    color: #e2e8f0;
-    text-align: center;
-    text-justify: inter-word;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.explanation-text strong {
-    color: #e2e8f0;
-    font-weight: 600;
-}
-
-@media screen and (max-width: 768px) {
-    .explanation-text {
-        max-width: 100%;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin: 15px auto;
-        padding: 0 16px;
-    }
-}
-
-@media print {
     .explanation-text {
         color: #000000 !important;
         max-width: 100% !important;
         text-align: justify !important;
         page-break-inside: avoid !important;
     }
+
     .explanation-text strong {
         color: #000000 !important;
     }
-}
-
-:root {
-    --graph-text: #FFFFFF;
 }

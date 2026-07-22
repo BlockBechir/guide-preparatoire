@@ -3,6 +3,7 @@ const yearSelect = document.getElementById("year");
 const resultDiv = document.getElementById("result");
 const resultDiv2 = document.getElementById("result2");
 const resultDiv3 = document.getElementById("Admise");
+const resultDiv4 = document.getElementById("result3");
 const tabs = document.querySelectorAll("#calculator .box-tab[data-value]");
 const bonusCheck = document.getElementById("bonus");
 
@@ -273,17 +274,7 @@ tabs.forEach(tab => {
     document.getElementById("group-vegetale").classList.toggle("hidden-element", !isBG);
 
     const tableMap = { "MP": "rankTableMP", "PC": "rankTablePC", "T": "rankTableT", "BG": "rankTableBG" };
-    document.querySelectorAll(".rank-table").forEach(t => t.classList.add("hidden-element"));
-    const activeTable = document.getElementById(tableMap[activeTab]);
-    if (activeTable) {
-      activeTable.classList.remove("hidden-element");
-      loadTableRows(activeTable);
-    }
-
-    const textInput = document.querySelector(".table-search");
-    if (textInput) textInput.value = "";
-    const rankInput = document.querySelector(".rank-filter");
-    if (rankInput) rankInput.value = "";
+    showRankTable(tableMap[activeTab]);
 
     update();
   });
@@ -300,6 +291,18 @@ function computeAverage(values) {
     total += 15;
   }
   return sumWeights > 0 ? (total / sumWeights) : 0;
+}
+
+function computeScore(values) {
+  let total = 0;
+  const currentWeights = weights[activeTab] || weights["MP"];
+  for (let i = 0; i < values.length; i++) {
+    total += values[i] * (currentWeights[i] || 0);
+  }
+  if (bonusCheck.checked) {
+    total += 15;
+  }
+  return total;
 }
 
 function computeRang(avg, year, tab) {
@@ -356,11 +359,11 @@ function update() {
     }
   });
 
+  const score = computeScore(values);
   const avg = computeAverage(values);
   const rang = computeRang(avg, yearSelect.value, activeTab);
 
   if (yearSelect.value === "2022") {
-    // Keep the rang, drop the "(Top X%)" part
     resultDiv.textContent = "Rang ≈ " + rang;
     resultDiv3.textContent = "";
     resultDiv3.classList.remove("Admise", "Refuse");
@@ -385,6 +388,7 @@ function update() {
   }
 
   resultDiv2.textContent = "Moyenne = " + avg.toFixed(2);
+  resultDiv4.textContent = "Score = " + score.toFixed(2);
 }
 
 inputs.forEach(input => input.addEventListener("input", update));
@@ -392,17 +396,22 @@ yearSelect.addEventListener("change", update);
 
 update();
 
-let originalTableRows = [];
+// Pristine row data per table, keyed by table id. Captured once each —
+// never re-scraped from the live DOM afterward, because the live DOM
+// gets destructively rebuilt by executeFilter() every time someone
+// searches. Re-scraping a filtered table would "bake in" whatever
+// subset was left visible as if it were the full dataset.
+const pristineTableData = {};
 let searchTimeout = null;
 
-function loadTableRows(table) {
-  if (!table) return;
+function captureTableData(table) {
+  if (!table || pristineTableData[table.id]) return;
   const tbody = table.getElementsByTagName("tbody")[0];
   const rows = Array.from(tbody.getElementsByTagName("tr"));
   let lastSchoolText = "";
   let lastSchoolSubname = "";
 
-  originalTableRows = rows.map(row => {
+  pristineTableData[table.id] = rows.map(row => {
     const schoolCell = row.querySelector("td[rowspan]");
     if (schoolCell) {
       lastSchoolText = schoolCell.textContent;
@@ -434,8 +443,10 @@ function loadTableRows(table) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  const table = document.querySelector(".rank-table:not(.hidden-element)");
-  loadTableRows(table);
+  // Capture every rank table's pristine rows up front, while all of them
+  // are still guaranteed untouched by any search — not just the one
+  // that happens to be visible first.
+  document.querySelectorAll(".rank-table").forEach(captureTableData);
 });
 
 function filterRankTable() {
@@ -454,6 +465,13 @@ function executeFilter(table) {
 
   if (!textInput || !rankInput) return;
 
+  // Safety net: if this table's pristine data was never captured for
+  // some reason, capture it now — but only ever from a table we haven't
+  // touched yet, never from the live (possibly filtered) DOM of a table
+  // we've already rendered a search result into.
+  captureTableData(table);
+  const rows = pristineTableData[table.id] || [];
+
   const rawFilter = textInput.value.trim();
   const filter = cleanString(textInput.value);
   const maxRankThreshold = parseInt(rankInput.value, 10);
@@ -466,7 +484,7 @@ function executeFilter(table) {
 
   const isSubnameQuery = rawFilter !== "" && /^[A-Z]+$/.test(rawFilter);
 
-  originalTableRows.forEach((rowData) => {
+  rows.forEach((rowData) => {
     let textConditionMatches = false;
 
     if (rawFilter === "") {
@@ -538,6 +556,26 @@ function executeFilter(table) {
   }
 }
 
+// Shows the requested rank table and always resets it to its full,
+// unfiltered pristine data — used every time a table becomes visible
+// (switching MP/PC/PT/BG, or re-entering the Guide des Rangs tab) so a
+// leftover search from before never lingers as the new "default" view.
+function showRankTable(tableId) {
+  document.querySelectorAll(".rank-table").forEach(t => t.classList.add("hidden-element"));
+  const table = document.getElementById(tableId);
+  if (!table) return null;
+  table.classList.remove("hidden-element");
+  captureTableData(table);
+
+  const textInput = document.querySelector(".table-search");
+  if (textInput) textInput.value = "";
+  const rankInput = document.querySelector(".rank-filter");
+  if (rankInput) rankInput.value = "";
+
+  executeFilter(table);
+  return table;
+}
+
 function cleanString(str) {
   return str.toLowerCase()
     .normalize("NFD")
@@ -548,6 +586,97 @@ function cleanString(str) {
 const pageTabs = document.querySelectorAll('[data-page-target]');
 const calculatorPage = document.getElementById('calculator');
 const guidePage = document.getElementById('guide');
+const schoolPage = document.getElementById('schools');
+const schoolSelect = document.getElementById('school-select');
+const schoolCards = document.querySelectorAll('.school-description-card');
+
+// Maps each school's branch <select> option value to the position (0-based)
+// of its matching filière <li> inside that school's .branch-list
+const schoolBranchMap = {
+    ENETCOM: { GSEC: 0, GII: 1, GT: 2, IDSD: 3 },
+    ENIB:    { GI: 0, GM: 1, GC: 2 },
+    ENICAR:  { GSIL: 0, INFR: 1, INFT: 2, ME: 3 },
+    ENIG:    { GCP: 0, GC: 1, GCR: 2, GEA: 3, GM: 4 },
+    ENIGAFSA:{ GCIM: 0, GETE: 1, GEM: 2 },
+    ENIM:    { GE: 0, GEN: 1, GM: 2, GT: 3 },
+    ENIS:    { GC: 0, GEM: 1, GI: 2, GMMI: 3, GE: 4, GB: 5, GRE: 6 },
+    ENISO:   { EI: 0, GTE: 1, IA: 2, MEC: 3, ISEA: 4, GP: 5 },
+    ENIT:    { TA: 0, I: 1, GC: 2, GI: 3, GHE: 4, MINDS: 5, T: 6, GM: 7, GE: 8 },
+    ENSI:    { I: 0 },
+    ENSIT:   { GC: 0, GE: 1, GI: 2, GM: 3, GMAM: 4, I: 5 },
+    ENSTAB:  { TA: 0 },
+    EPT:     { PT: 0 },
+    ESAKEF:  { SA: 0 },
+    ESAM:    { ER: 0 },
+    ESIAT:   { AA: 0 },
+    ESIMB:   { GMAI: 0, HA: 1, T: 2 },
+    ESSAI:   { SAI: 0 },
+    FST:     { CAI: 0, GS: 1, EE: 2, INFO: 3 },
+    INAT:    { SPV: 0, PH: 1, PA: 2, GREF: 3, AA: 4, HA: 5, EA: 6 },
+    ISACM:   { H: 0, GSH: 1, AP: 2, PA: 3 },
+    SUPCOM:  { T: 0 }
+};
+
+// Your ISACM branch <select> was given id="ISACT" (typo) instead of id="ISACM".
+// This override makes it work anyway — rename it in the HTML later if you want to drop this line.
+const branchSelectIdOverrides = { ISACM: 'ISACT' };
+
+function getBranchSelect(schoolValue) {
+    const id = branchSelectIdOverrides[schoolValue] || schoolValue;
+    return document.getElementById(id);
+}
+
+function getBranchListItems(schoolValue) {
+    const card = document.getElementById(`desc-${schoolValue}`);
+    const branchList = card ? card.querySelector('.branch-list') : null;
+    return branchList ? Array.from(branchList.children).filter(el => el.tagName === 'LI') : [];
+}
+
+function switchBranch(schoolValue, branchValue) {
+    const items = getBranchListItems(schoolValue);
+    const targetIndex = (schoolBranchMap[schoolValue] || {})[branchValue];
+    items.forEach((li, index) => li.classList.toggle('hidden-element', index !== targetIndex));
+}
+
+function showBranchSelectFor(schoolValue) {
+    document.querySelectorAll('.branch-select').forEach(sel => sel.classList.add('hidden-element'));
+    const branchSelect = getBranchSelect(schoolValue);
+    if (branchSelect) {
+        branchSelect.classList.remove('hidden-element');
+        switchBranch(schoolValue, branchSelect.value);
+    }
+}
+
+// Tag every per-school branch <select> so showBranchSelectFor can hide/show them,
+// and wire each one's change event — done in JS so no HTML edits are needed.
+[...Object.keys(schoolBranchMap).map(k => branchSelectIdOverrides[k] || k), 'ESAMATEUR'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('branch-select', 'hidden-element');
+    const schoolValue = Object.keys(branchSelectIdOverrides).find(k => branchSelectIdOverrides[k] === id) || id;
+    el.addEventListener('change', () => switchBranch(schoolValue, el.value));
+});
+
+function switchSchool(schoolValue) {
+    schoolCards.forEach(card => card.classList.add('hidden-element'));
+
+    const noGuideNotice = document.getElementById('no-guide-notice');
+    const activeCard = document.getElementById(`desc-${schoolValue}`);
+
+    if (activeCard) {
+        activeCard.classList.remove('hidden-element');
+        if (noGuideNotice) noGuideNotice.classList.add('hidden-element');
+    } else if (noGuideNotice) {
+        noGuideNotice.classList.remove('hidden-element');
+    }
+
+    showBranchSelectFor(schoolValue);
+}
+
+if (schoolSelect) {
+    schoolSelect.addEventListener('change', () => switchSchool(schoolSelect.value));
+    switchSchool(schoolSelect.value);
+}
 
 function switchGuideTable(tableTarget) {
     const tableTabs = guidePage.querySelectorAll('[data-table-target]');
@@ -555,17 +684,7 @@ function switchGuideTable(tableTarget) {
     const activeTab = guidePage.querySelector(`[data-table-target="${tableTarget}"]`);
     if (activeTab) activeTab.classList.add('active');
 
-    document.querySelectorAll('.rank-table').forEach(t => t.classList.add('hidden-element'));
-    const activeTable = document.getElementById(`rankTable${tableTarget}`);
-    if (activeTable) {
-        activeTable.classList.remove('hidden-element');
-        loadTableRows(activeTable);
-    }
-
-    const textInput = document.querySelector('.table-search');
-    if (textInput) textInput.value = '';
-    const rankInput = document.querySelector('.rank-filter');
-    if (rankInput) rankInput.value = '';
+    showRankTable(`rankTable${tableTarget}`);
 }
 
 pageTabs.forEach(tab => {
@@ -578,13 +697,19 @@ pageTabs.forEach(tab => {
         if (target === 'calculator') {
             calculatorPage.classList.remove('hidden-element');
             guidePage.classList.add('hidden-element');
+            schoolPage.classList.add('hidden-element');
         } else if (target === 'guide') {
             guidePage.classList.remove('hidden-element');
             calculatorPage.classList.add('hidden-element');
+            schoolPage.classList.add('hidden-element');
 
             const activeSectionTab = guidePage.querySelector('[data-table-target].active');
             const tableTarget = activeSectionTab ? activeSectionTab.dataset.tableTarget : 'MP';
             switchGuideTable(tableTarget);
+        } else if (target === 'schools') {
+            schoolPage.classList.remove('hidden-element');
+            calculatorPage.classList.add('hidden-element');
+            guidePage.classList.add('hidden-element');
         }
     });
 });
@@ -615,8 +740,9 @@ const themeLink = document.getElementById('theme-link');
 
 function drawChart() {
     // Dynamic color selection matching the active stylesheet:
-    // dark theme (unchecked) = white text/axis, light theme (checked) = black text/axis
-    const graphTextColor = themeButton.checked ? '#000000' : '#FFFFFF';
+    // stylesheet.css (unchecked) is now the crimson/white light theme, so its
+    // text/axis color is black; the checked alternate (stylesheet1.css) stays white.
+    const graphTextColor = themeButton.checked ? '#FFFFFF' : '#000000';
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -655,7 +781,7 @@ function drawChart() {
         const barHeight = (val / maxVal) * chartHeight;
         const y = canvas.height - padding.bottom - barHeight;
 
-        ctx.fillStyle = '#3498db';
+        ctx.fillStyle = '#c8102e';
         ctx.fillRect(x, y, barWidth, barHeight);
 
         ctx.fillStyle = graphTextColor;
