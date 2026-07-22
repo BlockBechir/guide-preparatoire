@@ -742,7 +742,10 @@ function drawChart() {
     // Dynamic color selection matching the active stylesheet:
     // stylesheet.css (unchecked) is now the crimson/white light theme, so its
     // text/axis color is black; the checked alternate (stylesheet1.css) stays white.
-    const graphTextColor = themeButton.checked ? '#FFFFFF' : '#000000';
+    // Guarded with `?.` and a fallback so this never throws if the theme
+    // toggle checkbox isn't present in the page — the chart still needs
+    // to draw either way.
+    const graphTextColor = themeButton?.checked ? '#FFFFFF' : '#000000';
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -804,17 +807,19 @@ function drawChart() {
 
 drawChart();
 
-themeButton.addEventListener('change', function() {
-    if (this.checked) {
-        themeLink.setAttribute('href', 'stylesheet1.css');
-    } else {
-        themeLink.setAttribute('href', 'stylesheet.css?v=2');
-    }
+if (themeButton) {
+    themeButton.addEventListener('change', function() {
+        if (this.checked) {
+            themeLink.setAttribute('href', 'stylesheet1.css');
+        } else {
+            themeLink.setAttribute('href', 'stylesheet.css?v=2');
+        }
 
-    drawChart();
+        drawChart();
 
-    // Call the original function in your script that calculates the scores, if present
-    if (typeof calculateScore === 'function') {
-        calculateScore();
-    }
-});
+        // Call the original function in your script that calculates the scores, if present
+        if (typeof calculateScore === 'function') {
+            calculateScore();
+        }
+    });
+}
