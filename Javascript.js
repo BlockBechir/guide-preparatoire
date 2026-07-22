@@ -608,6 +608,7 @@ const schoolBranchMap = {
     EPT:     { PT: 0 },
     ESAKEF:  { SA: 0 },
     ESAM:    { ER: 0 },
+    ESAMATEUR: { PAF: 0 },
     ESIAT:   { AA: 0 },
     ESIMB:   { GMAI: 0, HA: 1, T: 2 },
     ESSAI:   { SAI: 0 },
@@ -649,7 +650,7 @@ function showBranchSelectFor(schoolValue) {
 
 // Tag every per-school branch <select> so showBranchSelectFor can hide/show them,
 // and wire each one's change event — done in JS so no HTML edits are needed.
-[...Object.keys(schoolBranchMap).map(k => branchSelectIdOverrides[k] || k), 'ESAMATEUR'].forEach(id => {
+[...Object.keys(schoolBranchMap).map(k => branchSelectIdOverrides[k] || k)].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.classList.add('branch-select', 'hidden-element');
