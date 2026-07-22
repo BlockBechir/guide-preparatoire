@@ -553,7 +553,7 @@ form#calculator {
     margin: 20px auto;
     font-size: 0.95rem;
     line-height: 1.6;
-    color: var(--text-muted);
+    color: #000000;
     text-align: justify;
     text-justify: inter-word;
     font-family: var(--font-body);
