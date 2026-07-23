@@ -1332,3 +1332,8 @@ div.hidden-element {
         color: #000000 !important;
     }
 }
+
+.justified-text p {
+  text-align: justify;
+  text-justify: inter-word;
+}
