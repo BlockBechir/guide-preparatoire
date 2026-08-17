@@ -308,7 +308,7 @@ function computeScore(values) {
 function computeRang(avg, year, tab) {
   const selectedRangs = rangs[tab][year];
   if (!selectedRangs) return 0;
-  let r = 1, roundAvg = Math.round(avg);
+  let r = 1, roundAvg = Math.floor(avg);
   for (let i = roundAvg + 1; i < selectedRangs.length; i++) r += selectedRangs[i];
   const fractional = 1 - (avg - roundAvg);
   return Math.round(r + fractional * (selectedRangs[roundAvg] || 0));
@@ -320,7 +320,7 @@ function computeSubjectRang(grade, tab, year, index) {
   
   const scaledGrade = (year === "2025") ? grade * 2 : grade;  
   let r = 0;
-  let roundGrade = Math.round(scaledGrade);
+  let roundGrade = Math.floor(scaledGrade);
   
   for (let i = roundGrade + 1; i < selectedRangs.length; i++) {
     r += selectedRangs[i];
