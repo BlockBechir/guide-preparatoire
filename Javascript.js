@@ -750,7 +750,7 @@ function drawChart() {
     // Bar fill also follows the active theme: the dark theme's primary
     // crimson is a brighter shade than the light theme's, so the bars
     // switch along with everything else instead of staying fixed.
-    const barColor = themeButton?.checked ? '#ff3b52' : '#c8102e';
+    const barColor = themeButton?.checked ? '#287DCC' : '#1C568F';
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -793,9 +793,11 @@ drawChart();
 if (themeButton) {
     themeButton.addEventListener('change', function() {
         if (this.checked) {
-            themeLink.setAttribute('href', 'stylesheet1.css');
+          themeLink.setAttribute('href', 'stylesheet1.css');
+          document.querySelector('img[source], img[src$="distribution.svg"]').src = 'distribution_bright.svg';
         } else {
-            themeLink.setAttribute('href', 'stylesheet.css?v=2');
+          themeLink.setAttribute('href', 'stylesheet.css?v=2');
+          document.querySelector('img[source], img[src$="distribution_bright.svg"]').src = 'distribution.svg';
         }
 
         drawChart();

@@ -1,57 +1,96 @@
-/* ==========================================================================
-   TYPE — IBM Plex trio: Serif for editorial authority (school names),
-   Sans for body copy, Mono for spec/data values. Chosen because the Plex
-   family was designed by IBM specifically for technical communication —
-   it is the actual house type of engineering documentation, not a generic
-   UI stack.
-   ========================================================================== */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 /* ==========================================================================
-   DESIGN TOKENS — "redline, after dark" palette.
-   Same idea as the light "redline" theme — one crimson accent doing all
-   the work, black and white/paper carrying the rest of the contrast —
-   but built on a dark base instead. The light/dark contrast pairs from
-   the paper version (card header, the Double-Diplôme chip, one lane of
-   every fork, the table header) all still exist here; they've simply
-   swapped which side is the bright one, so they keep working as actual
-   contrast rather than disappearing into a now-dark page.
+   DARK THEME
+   Guide de Prépa Tunisie — dark theme.
+
+   Structure: this file is [type + metrics] + [dark tokens] + [shared
+   component rules]. stylesheet.css and stylesheet1.css differ ONLY in the
+   token block; every component rule below is identical in both files, so a
+   change to a component needs making once, in the same place, in each.
+   Nothing outside the token block hardcodes a color.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   TYPE + METRICS — shared by both themes.
+   IBM Plex Sans for everything read as language, IBM Plex Mono for anything
+   read as data: ranks, capacities, grades, and the small uppercase labels
+   that name a field. Splitting the two on that rule alone is what makes the
+   tables scannable, and Plex is the house type of technical documentation
+   rather than a generic UI stack.
    ========================================================================== */
 :root {
-    --font-display: "IBM Plex Serif", Georgia, serif;
-    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-    --bg: #120b0c;
-    --panel: #1c1314;
-    --inset: #170f10;
-    --raised: #2a1b1c;
+    --measure-wide: 860px;
+}
 
-    --line: #3c2b2c;
-    --line-strong: #55393a;
-    --line-faint: #221718;
+/* ==========================================================================
+   THEME — Dark ("graphite")
+   Cool neutral greys with a single blue accent. Greys carry a slight blue
+   cast so the accent belongs to the palette rather than sitting on top of
+   it. Surfaces separate by luminance and a hairline border, not by shadow,
+   which is what keeps a dark UI legible.
+   ========================================================================== */
+:root {
+    color-scheme: dark;
 
-    --text: #f3e6df;
-    --text-muted: #b89890;
-    --text-faint: #85685f;
+    /* Surfaces, from page back to the most raised element */
+    --bg: #0e1116;
+    --surface: #151a21;
+    --surface-2: #1b212a;
+    --surface-3: #222933;
+    --surface-inset: #11151b;
 
-    --text-on-light: #1a1112;
-    --text-on-light-muted: #4a3634;
+    /* Hairlines. --border is the default rule; --border-strong marks the
+       edge of an interactive control so inputs read as targets. */
+    --border: #262e39;
+    --border-strong: #38424f;
+    --border-subtle: #1c232c;
 
-    /* Crimson brightens for the dark base — a deep red like the paper
-       theme's would sink into near-black, so this becomes the vivid
-       primary and the old bright one becomes the muted secondary. */
-    --crimson: #ff3b52;
-    --crimson-dim: rgba(255, 59, 82, 0.14);
-    --crimson-line: rgba(255, 59, 82, 0.45);
-    --crimson-dark: #c8102e;
-    --crimson-dark-dim: rgba(200, 16, 46, 0.12);
+    --text: #e7ebf0;
+    --text-2: #98a3b2;
+    --text-3: #6a7583;
 
-    --success: #43c471;
-    --danger: var(--crimson);
+    /* One accent. Used for state (active, focus, link) and for the numbers
+       that matter, never as decoration. */
+    --accent: #4d9cf5;
+    --accent-strong: #7ab6ff;
+    --accent-muted: #2f6db8;
+    /* The accent used as a FILL is a step deeper than the accent used as
+       text. A link has to hold against the dark background; a filled chip
+       has to hold white text on top of it. Same hue, two jobs. */
+    --accent-fill: #2c6cb9;
+    --accent-fill-hover: #357cd0;
+    --accent-soft: rgba(77, 156, 245, 0.13);
+    --accent-line: rgba(77, 156, 245, 0.38);
+    --on-accent: #ffffff;
 
-    --radius: 3px;
-    --measure: 74ch;
+    /* The rank table's header bar is a deliberately dark band that breaks
+       from the body of the table — the strongest single contrast on the
+       guide page, and the thing that made the original table read as a
+       datasheet rather than a list. Kept dark in BOTH themes so the table
+       has the same character either way. */
+    --table-head-bg: #080c12;
+    --table-head-text: #e7eff6;
+
+    --success: #43b581;
+    --success-soft: rgba(67, 181, 129, 0.12);
+    --danger: #e5675c;
+    --danger-soft: rgba(229, 103, 92, 0.12);
+
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+
+/* Select chevron, tinted per theme so it never sits on the field as a
+   foreign black mark. */
+:root {
+    --chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'><path d='M1 1L6 6L11 1' stroke='%236a7583' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 }
 
 /* ==========================================================================
@@ -59,267 +98,116 @@
    ========================================================================== */
 * { box-sizing: border-box; }
 
+html { -webkit-text-size-adjust: 100%; }
+
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: var(--font-body);
-    padding: 20px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
     margin: 0;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 28px 20px 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-a { color: var(--crimson); }
+a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-line);
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a:hover {
+    color: var(--accent-strong);
+    border-bottom-color: var(--accent-strong);
+}
+
+::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+}
+
+/* Headings sit on a tight, deliberate scale. The page has real documentary
+   content in it, so the type has to hold long-form reading, not just labels. */
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-sans);
+    color: var(--text);
+    letter-spacing: -0.011em;
+    margin: 0;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    max-width: var(--measure-wide);
+    margin: 48px auto 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+}
+
+h2 {
+    font-size: 19px;
+    font-weight: 650;
+    line-height: 1.3;
+    margin: 36px 0 12px;
+}
+
+/* The page uses <u> heavily inside headings for emphasis; an underline under
+   an already-underlined heading rule reads as noise, so it becomes a weight
+   change instead. */
+h1 u, h2 u, h3 u, h4 u, h5 u {
+    text-decoration: none;
+}
+
+p { margin: 0 0 14px; }
+
+strong, b { font-weight: 600; }
 
 /* ==========================================================================
-   FORM CONTROLS — calculator tab
+   PANELS
    ========================================================================== */
-.input-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    width: 300px;
-}
-
-.input-group label {
-    width: 150px;
-    text-align: right;
-    margin-right: 15px;
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.input-group input {
-    width: 80px;
-    padding: 5px;
-    text-align: center;
-}
-
-#result {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    margin-top: 15px;
-    font-weight: 600;
-    color: var(--crimson);
-}
-
-.Refuse {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    margin-top: 15px;
-    font-weight: 600;
-    color: var(--danger);
-}
-
-.Admise {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    margin-top: 15px;
-    font-weight: 600;
-    color: var(--success);
-}
-
-#result2,
-#result3 {
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-    margin-top: 5px;
-    color: var(--crimson-dark);
-}
-
-input[type="number"] {
-    border: 1px solid var(--line-strong);
-    background-color: var(--inset);
-    padding: 8px;
-    font-size: 16px;
-    font-family: var(--font-mono);
-    border-radius: 2px;
-    color: var(--text);
-    text-align: left;
-    outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-input[type="number"]:focus {
-    border-color: var(--crimson);
-    box-shadow: 0 0 0 3px var(--crimson-dim);
-}
-
 .main-box {
     position: relative;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    padding: 20px;
-    background-color: var(--panel);
-    width: fit-content;
-    margin: 20px auto;
-    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 16px;
+    padding: 0 0 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
 }
 
-/* Global theme toggle — fixed to the viewport rather than nested in any
-   tab's content, so it's reachable no matter which tab is active. Placed
-   bottom-left, mirroring the watermark at bottom-right, so it stays clear
-   of the top tab navigation on narrow screens. */
-.global-theme-toggle {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    z-index: 1000;
+/* Panel header. A quiet inset bar with a mono label — the convention of a
+   technical console, without imitating one. */
+.box-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    background-color: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    border-radius: 8px 8px 0 0;
+    padding: 11px 20px;
+    margin-bottom: 20px;
+}
+
+form#calculator {
+    width: 100%;
+    max-width: 860px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    background: var(--panel);
-    border: 1px solid var(--line-strong);
-    border-radius: 20px;
-    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
-}
-
-.theme-toggle-icon {
-    font-size: 13px;
-    line-height: 1;
-    color: var(--text-faint);
-    user-select: none;
-    pointer-events: none;
-}
-
-select {
-    border: 1px solid var(--line-strong);
-    background: var(--inset);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    padding: 10px 36px 10px 14px;
-    font-size: 15px;
-    font-family: var(--font-body);
-    border-radius: var(--radius);
-    color: var(--text);
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1L5 5L9 1' stroke='%23b89890' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-select:hover {
-    border-color: var(--crimson-line);
-    background-color: var(--raised);
-}
-
-select:focus {
-    border-color: var(--crimson);
-    box-shadow: 0 0 0 3px var(--crimson-dim);
-}
-
-select option {
-    background-color: var(--panel);
-    color: var(--text);
-}
-
-select option:checked,
-select option:hover {
-    background-color: var(--raised);
-    color: var(--text);
-}
-
-.box-tab {
-    cursor: pointer;
-    background-color: var(--panel);
-    color: var(--text-muted);
-    border: 1px solid var(--line-strong);
-    padding: 8px 16px;
-    border-radius: 2px;
-    font-weight: 600;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    letter-spacing: 0.03em;
-    transition: all 0.15s ease;
-}
-
-.box-tab:hover {
-    color: var(--text);
-    background-color: var(--raised);
-    border-color: var(--crimson-line);
-}
-
-.box-tab.active {
-    background-color: var(--crimson) !important;
-    color: var(--text-on-light) !important;
-    border-color: var(--crimson);
-    box-shadow: 0 0 0 1px var(--crimson-line);
-}
-
-.input-group label:has(+ input + label) + input + label {
-    color: var(--crimson-dark);
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-input[type="checkbox"] {
-    position: relative;
-    width: 40px;
-    height: 20px;
-    appearance: none;
-    background-color: var(--line-strong);
-    outline: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-}
-
-input[type="checkbox"]:checked {
-    background-color: var(--crimson);
-}
-
-input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    background-color: var(--text);
-    transition: transform 0.15s ease;
-}
-
-input[type="checkbox"]:checked::before {
-    transform: translateX(20px);
-}
-
-.watermark {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    background: rgba(0, 0, 0, 0.6);
-    padding: 6px 12px;
-    border: 1px solid var(--crimson-line);
-    border-radius: 2px;
-    backdrop-filter: blur(4px);
-    pointer-events: none;
-    user-select: none;
-    z-index: 9999;
-}
-
-.remarque {
-    max-width: 500px;
-    margin: 15px auto 0 auto;
-    font-size: 0.85rem;
-    line-height: 1.4;
-    color: var(--text-faint);
-    text-align: center;
-    border-top: 1px solid var(--line);
-    padding-top: 15px;
 }
 
 /* ==========================================================================
@@ -328,116 +216,538 @@ input[type="checkbox"]:checked::before {
 .tabs-container {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 4px;
     width: 100%;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 15px;
+    max-width: 1180px;
+    padding: 4px;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+/* Primary page navigation — the bar directly under <body>. Sized to its
+   labels rather than stretched across the viewport, and marked with a rule
+   rather than a fill: it is navigation, not the subject of the page. */
+body > .tabs-container {
+    width: auto;
+    max-width: 100%;
+    gap: 2px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    margin-bottom: 28px;
+}
+
+body > .tabs-container .box-tab {
+    flex: 0 0 auto;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 11px 20px;
+    font-size: 13.5px;
+}
+
+body > .tabs-container .box-tab:hover {
+    background: none;
+    color: var(--text);
+    border-bottom-color: var(--border-strong);
+}
+
+body > .tabs-container .box-tab.active {
+    color: var(--accent);
+    background: none;
+    border-color: transparent;
+    border-bottom-color: var(--accent);
+}
+
+/* The section tabs live inside a panel that already has a border, so they
+   drop the outer chrome and read as a segmented control. */
+.main-box .tabs-container,
+.table-search-tab .tabs-container {
+    background-color: var(--surface-inset);
+    margin: 0 20px;
+    width: auto;
 }
 
 .box-tab {
-    flex: 1;
-    max-width: 160px;
+    flex: 1 1 auto;
     text-align: center;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 550;
+    letter-spacing: 0.01em;
+    color: var(--text-2);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 9px 16px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.box-title {
-    font-family: var(--font-mono);
-    font-size: 18px;
+.box-tab:hover {
+    color: var(--text);
+    background-color: var(--surface-3);
+}
+
+/* Active state is the accent doing structural work: a filled chip, no
+   underline, no glow. */
+.box-tab.active {
+    color: var(--on-accent);
+    background-color: var(--accent-fill);
+    border-color: var(--accent-fill);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-faint);
-    margin-bottom: 8px;
-    align-self: flex-start;
-    padding-left: 2px;
-    text-align: center;
+}
+
+.box-tab.active:hover {
+    background-color: var(--accent-fill-hover);
+    border-color: var(--accent-fill-hover);
 }
 
 /* ==========================================================================
-   RANK TABLE
+   FORM CONTROLS
    ========================================================================== */
-.rank-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-family: var(--font-body);
-  background-color: var(--panel);
-  margin: 0 0 40px 0;
-  max-width: 1200px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.45);
-  margin-top: 0 !important;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 88px 44px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 0 20px;
+    margin-bottom: 10px;
 }
 
-/* The table body is already dark here, so the header bar flips to being
-   the bright block instead — same light/dark pairing as the paper
-   theme, just with the poles swapped. */
-.rank-table th {
-  background-color: var(--crimson);
-  color: var(--text-on-light);
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 16px 24px;
-  text-align: left;
-  border-bottom: 2px solid var(--crimson-dark);
+.input-group label {
+    font-size: 14px;
+    color: var(--text-2);
+    text-align: right;
+    justify-self: end;
+    line-height: 1.35;
 }
 
-.rank-table th:nth-child(1) { width: 40%; }
-.rank-table th:nth-child(2) { width: 30%; }
-.rank-table th:nth-child(3) { width: 15%; text-align: center; }
-.rank-table th:nth-child(4) { width: 15%; text-align: center; }
-
-.rank-table td {
-  padding: 16px 24px;
-  font-size: 15px;
-  color: var(--text);
-  vertical-align: middle;
-  word-wrap: break-word;
+/* The trailing label on each row is a live readout (the subject's own rank),
+   so it is set in mono and right-aligned to form a clean numeric column. */
+.input-group label:has(+ input + label) + input + label {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-3);
+    text-align: right;
+    justify-self: end;
+    font-variant-numeric: tabular-nums;
 }
 
-.rank-table tbody td {
-  border: none;
+input[type="number"],
+select,
+.search-container input,
+.table-search-tab input {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text);
+    background-color: var(--surface-inset);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-.rank-table tbody tr:has(td[rowspan]) td,
-.rank-table tbody tr:first-child td,
-.rank-table tbody tr td:first-child:not([rowspan]) {
-  border-top: 1px solid var(--line);
+input[type="number"] {
+    width: 100%;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
-.rank-table td[rowspan] {
-  font-weight: 700;
-  color: var(--crimson);
-  font-family: var(--font-mono);
-  font-size: 15px;
-  background-color: var(--panel);
+input[type="number"]:focus,
+select:focus,
+.search-container input:focus,
+.table-search-tab input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    background-color: var(--surface);
 }
 
-.rank-table tbody td:nth-last-child(2),
-.rank-table tbody td:last-child {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  text-align: center;
+input::placeholder { color: var(--text-3); }
+
+/* Hide the spinners: the field is a grade out of 20, typed not nudged. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] { -moz-appearance: textfield; }
+
+select {
+    width: 100%;
+    font-family: var(--font-sans);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 34px;
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 11px center;
 }
 
-.rank-table tbody td:nth-last-child(2) {
-  color: var(--crimson-dark);
+select:hover { border-color: var(--accent-muted); }
+
+select option {
+    background-color: var(--surface);
+    color: var(--text);
 }
 
-.rank-table tbody td:last-child {
-  color: var(--crimson);
+select option:checked,
+select option:hover {
+    background-color: var(--accent-soft);
+}
+
+/* The school picker is a primary navigation control on its tab, so it gets
+   more presence than a form field would. */
+#schools select {
+    max-width: 420px;
+    margin: 0 auto 10px;
+    display: block;
+    font-size: 14.5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Switch */
+input[type="checkbox"] {
+    position: relative;
+    width: 38px;
+    height: 21px;
+    flex: none;
+    justify-self: start;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    border-radius: 11px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+input[type="checkbox"]:focus-visible {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: translateX(17px);
+}
+
+/* ==========================================================================
+   RESULTS
+   Four readouts stacked at the foot of the calculator. The rank is the
+   headline; the verdict is the only colored element; mean and score are
+   supporting rows.
+   ========================================================================== */
+#result {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-align: center;
+    margin: 22px 20px 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.Refuse,
+.Admise {
+    display: block;
+    width: fit-content;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 5px;
+    padding: 5px 12px;
+    margin: 12px auto 0;
+}
+
+.Refuse {
+    color: var(--danger);
+    background-color: var(--danger-soft);
+    border: 1px solid var(--danger);
+}
+
+.Admise {
+    color: var(--success);
+    background-color: var(--success-soft);
+    border: 1px solid var(--success);
+}
+
+#result2,
+#result3 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-2);
+    text-align: center;
+    margin-top: 8px;
+}
+
+#result2 { margin-top: 16px; }
+
+/* ==========================================================================
+   PROSE BLOCKS
+   ========================================================================== */
+.remarque {
+    width: 100%;
+    max-width: 520px;
+    box-sizing: border-box;
+    margin: 20px auto 0;
+    padding: 16px 20px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-3);
+    text-align: center;
+}
+
+/* The contact notices frame the rank tables, so they keep the panel
+   treatment and the accent edge, and match the table's width. */
+.contact-notice {
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    margin: 20px auto;
+    padding: 14px 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-2);
+}
+
+.remarque b,
+.contact-notice b,
+.remarque strong,
+.contact-notice strong {
+    color: var(--text);
+}
+
+.contact-link {
+    font-weight: 550;
+}
+
+.repar {
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin: 24px auto 12px;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: center;
+}
+
+.explanation-text {
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.explanation-text p {
+    margin: 0 0 16px;
+}
+
+.explanation-text strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* A long quotation from the jury president. Set as a quote block so it is
+   visibly sourced material rather than the author's own voice. */
+.explanation-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 28px 0 10px;
+}
+
+.explanation-text h4 + p {
+    padding: 16px 20px;
+    background-color: var(--surface-2);
+    border-left: 3px solid var(--border-strong);
+    border-radius: 0 6px 6px 0;
+    font-size: 14.5px;
+    color: var(--text-2);
+}
+
+.justified-text p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+#chart {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 24px;
+    padding: 12px;
+}
+
+/* ==========================================================================
+   PAGE CONTAINERS
+   Note: the markup uses class "page-content-rapper"; both spellings are
+   matched here so the constraint applies either way.
+   ========================================================================== */
+#schools,
+.page-content-wrapper,
+.page-content-rapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0 40px;
+}
+
+#guide {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 0 40px;
+}
+
+.hidden-element,
+.input-group.hidden-element,
+div.hidden-element {
+    display: none !important;
+}
+
+/* ==========================================================================
+   THEME TOGGLE + WATERMARK
+   ========================================================================== */
+.global-theme-toggle {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 12px;
+    background-color: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    box-shadow: var(--shadow-md);
+}
+
+.theme-toggle-icon {
+    font-size: 12px;
+    line-height: 1;
+    color: var(--text-3);
+    user-select: none;
+    pointer-events: none;
+}
+
+.global-theme-toggle input[type="checkbox"] {
+    justify-self: auto;
+}
+
+.watermark {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ==========================================================================
+   FILTER BAR — rank tables
+   ========================================================================== */
+.table-search-tab {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 0 18px;
+    background-color: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.table-search-tab .box-title {
+    margin-bottom: 18px;
+}
+
+.filter-inputs-row {
+    display: flex;
+    gap: 12px;
+    padding: 0 20px;
+}
+
+.filter-field {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.filter-field input {
+    width: 100%;
+}
+
+.table-search {
+    font-family: var(--font-sans) !important;
+}
+
+input[type="number"].rank-filter {
+    text-align: left;
 }
 
 .search-container {
@@ -450,572 +760,421 @@ input[type="checkbox"]:checked::before {
 .search-container input {
     width: 100%;
     max-width: 500px;
-    background: var(--inset);
-    border: 1px solid var(--line-strong);
-    border-radius: 2px;
-    padding: 10px 16px;
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search-container input:focus {
-    border-color: var(--crimson);
-    box-shadow: 0 0 0 3px var(--crimson-dim);
-}
-
-.table-search-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border: 1px solid var(--line-strong);
-  border-bottom: none;
-  border-top-left-radius: var(--radius);
-  border-top-right-radius: var(--radius);
-  padding: 12px 20px;
-  width: 100%;
-  max-width: 380px;
-  align-self: flex-start;
-  margin: 40px 0 0 0;
-}
-
-.table-search-tab .box-title {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-faint);
-  margin-bottom: 8px;
-}
-
-.table-search-tab input {
-  width: 100%;
-  max-width: 350px;
-  background: var(--bg);
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  padding: 8px 14px;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.table-search-tab input:focus {
-  border-color: var(--crimson);
-  box-shadow: 0 0 0 3px var(--crimson-dim);
-}
-
-.contact-notice {
-  background-color: var(--panel);
-  border: 1px solid var(--line-strong);
-  border-left: 3px solid var(--crimson);
-  color: var(--text-muted);
-  padding: 14px 20px;
-  margin: 20px auto;
-  border-radius: 2px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  max-width: 1200px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.contact-link {
-  color: var(--crimson);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.15s ease;
-}
-
-.contact-link:hover {
-  color: var(--text);
-}
-
-#chart {
-    background-color: transparent;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-form#calculator {
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
-}
-
-.explanation-text {
-    max-width: 800px;
-    margin: 20px auto;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #FFFFFF;
-    text-align: justify;
-    text-justify: inter-word;
-    font-family: var(--font-body);
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.explanation-text strong {
-    color: var(--text);
-    font-weight: 600;
-}
-
-.repar {
-    max-width: 800px;
-    margin: 20px auto 10px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.6;
-    color: var(--text);
-    text-align: center;
-    font-family: var(--font-body);
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.hidden-element,
-.input-group.hidden-element,
-div.hidden-element {
-    display: none !important;
 }
 
 /* ==========================================================================
-   GUIDE DES ÉCOLES — technical datasheet / article layout
+   RANK TABLE
+   Keeps the original structure: a hard dark header band over a light body,
+   institution names in mono as the anchor column, and both figures centred
+   in mono so ranks can be compared down the column at a glance.
    ========================================================================== */
-
-/* NOTE: the schools tab wrapper in the HTML carries the class
-   "page-content-rapper" (typo — missing the "w" in "wrapper"), so the
-   original .page-content-wrapper rule never actually matched it. Targeting
-   #schools directly here so the layout reliably applies. */
-#schools,
-.page-content-wrapper {
-  width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  padding: 8px 0 60px;
-  background-image: radial-gradient(var(--line-faint) 1.3px, transparent 1.3px);
-  background-size: 22px 22px;
-  background-position: -1px -1px;
+.rank-table-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#schools select {
-  margin-bottom: 8px;
+.rank-table {
+    width: 100%;
+    max-width: 1200px;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--font-sans);
+    background-color: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 0 40px;
+    box-shadow: var(--shadow-sm);
 }
 
-/* #guide (the rank-tables tab) shares the same typo'd "page-content-rapper"
-   class as #schools, so the base .page-content-wrapper rule never matches
-   it either. Constraining it explicitly here, at desktop size, keeps it
-   consistent with #schools rather than leaving it unconstrained. */
-#guide {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  box-sizing: border-box;
+/* The table sits directly beneath the filter panel and shares its edge, so
+   the two read as one instrument rather than two stacked boxes. Applied to
+   every table, not just the first: the four section tables are siblings and
+   whichever one is visible is the one under the panel. */
+.rank-table {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
+.rank-table th {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--table-head-text);
+    background-color: var(--table-head-bg);
+    border-bottom: 2px solid var(--accent);
+    padding: 15px 22px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.rank-table th:nth-child(1) { width: 38%; }
+.rank-table th:nth-child(2) { width: 30%; }
+.rank-table th:nth-child(3) { width: 16%; text-align: center; }
+.rank-table th:nth-child(4) { width: 16%; text-align: center; }
+
+.rank-table td {
+    padding: 15px 22px;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--text);
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+.rank-table tbody td {
+    border: none;
+}
+
+/* Rules are drawn only where a new record starts, so a multi-row institution
+   reads as one block instead of four separate ones. */
+.rank-table tbody tr:has(td[rowspan]) td,
+.rank-table tbody tr:first-child td,
+.rank-table tbody tr td:first-child:not([rowspan]) {
+    border-top: 1px solid var(--border-subtle);
+}
+
+.rank-table tbody tr:first-child td {
+    border-top: none;
+}
+
+/* Institution column — mono and accented, so a school can be picked out of
+   a long table without reading it. */
+.rank-table td[rowspan] {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--accent);
+    background-color: var(--surface-2);
+    border-right: 1px solid var(--border-subtle);
+    vertical-align: top;
+    padding-top: 16px;
+}
+
+.rank-table tbody td:nth-last-child(2),
+.rank-table tbody td:last-child {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+/* Both figures are set in the accent, the rank at full strength and the
+   capacity a step back — they are read together, but the rank is the one
+   being looked up. */
+.rank-table tbody td:nth-last-child(2) {
+    color: var(--accent-strong);
+}
+
+.rank-table tbody td:last-child {
+    color: var(--accent);
+}
+
+.rank-table tbody tr:hover td {
+    background-color: var(--surface-2);
+}
+
+.rank-table tbody tr:hover td[rowspan] {
+    background-color: var(--surface-3);
+}
+
+/* ==========================================================================
+   SCHOOL CARDS
+   ========================================================================== */
 .school-description-card {
-  position: relative;
-  background: var(--panel);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  padding: 0 32px 26px;
-  margin-bottom: 28px;
-  box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.55);
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
+    position: relative;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 28px 24px;
+    margin-bottom: 22px;
+    width: 100%;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
-/* corner registration marks — a nod to technical drawings and printer's
-   crop marks; two opposing corners read as precise rather than four,
-   which would tip into decoration */
-.school-description-card::before,
-.school-description-card::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.school-description-card::before {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--crimson);
-  border-left: 2px solid var(--crimson);
-}
-
-.school-description-card::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--crimson-dark);
-  border-right: 2px solid var(--crimson-dark);
-}
-
-/* The card body is already dark, so the header bar flips to bright
-   crimson — the same light/dark pairing as the paper theme, just with
-   the poles swapped, styled like a bold banner rather than a black
-   title block. */
 .school-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  background: var(--crimson);
-  margin: 0 -32px 20px;
-  padding: 22px 32px 18px;
-  border-bottom: 3px solid var(--crimson-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    background-color: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    margin: 0 -28px 22px;
+    padding: 20px 28px;
 }
 
-/* Visually swap h3 (acronym) and h4 (full name) without touching markup:
-   the acronym becomes a small mono "spec code" kicker above the serif
-   headline, like a datasheet part-number over its title. */
+/* The markup puts the acronym (h3) before the full name (h4); reversing the
+   visual order without touching the HTML turns the acronym into a kicker
+   above the title, which is how an institution is normally identified. */
 .school-title-group {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 5px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 4px;
+    min-width: 0;
 }
 
 .school-title-group h3 {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--text-on-light-muted);
-  text-transform: uppercase;
-}
-
-.school-title-group h3::before {
-  content: 'FICHE N\00B0  ';
-  color: var(--text-on-light-muted);
-  font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
 }
 
 .school-title-group h4 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 25px;
-  font-weight: 600;
-  color: var(--text-on-light);
-  line-height: 1.3;
+    font-size: 20px;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--text);
 }
 
 .school-badges {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  padding-top: 3px;
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    flex: none;
+    padding-top: 2px;
 }
 
 .badge {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 2px;
-  background: transparent;
-  white-space: nowrap;
-}
-
-/* Badges sit on the bright crimson header now, so they read as dark
-   marks against it rather than light marks against black. */
-.badge-location {
-  color: var(--text-on-light-muted);
-  border: 1px solid rgba(26, 17, 18, 0.35);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 550;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 4px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-3);
+    background-color: var(--surface);
 }
 
 .badge-type {
-  color: var(--crimson);
-  background: var(--text-on-light);
-  border: 1px solid var(--text-on-light);
-  font-weight: 700;
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background-color: var(--accent-soft);
 }
 
-/* stats grid restyled as a spec-sheet table on the dark body */
+/* Spec strip — the four facts worth scanning before reading anything. */
 .school-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1px;
-  background-color: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  margin-bottom: 26px;
-  overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    background-color: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 26px;
 }
 
 .stat-item {
-  display: flex;
-  flex-direction: column;
-  background: var(--inset);
-  padding: 12px 16px;
-  border-left: 2px solid var(--crimson-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: var(--surface-2);
+    padding: 12px 15px;
 }
 
 .stat-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--text-faint);
-  margin-bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-3);
 }
 
 .stat-value {
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--text);
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--text);
 }
 
 .school-body h5 {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 30px 0 14px 0;
-  padding-bottom: 9px;
-  border-bottom: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--text-faint);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
 }
 
-.school-body h5::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  flex: none;
-  background: var(--crimson);
-  transform: rotate(45deg);
+.school-body h5:first-child {
+    margin-top: 0;
 }
 
 .school-body p {
-  font-family: var(--font-body);
-  font-size: 15.5px;
-  line-height: 1.75;
-  color: var(--text-muted);
-  max-width: var(--measure);
-  margin: 0 0 16px 0;
-}
-
-/* lead paragraph — article drop-cap treatment on the overview text */
-.school-body > p:first-of-type {
-  font-size: 16.5px;
-  color: var(--text);
-}
-
-.school-body > p:first-of-type::first-letter {
-  font-family: var(--font-display);
-  font-size: 2.7em;
-  font-weight: 600;
-  float: left;
-  line-height: 0.78;
-  padding-right: 8px;
-  padding-top: 5px;
-  color: var(--crimson);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0 0 14px;
 }
 
 /* ==========================================================================
    FILIÈRE HIERARCHY
-   Tier 1 — .branch-list  : the named filière/domain (e.g. "Génie Civil")
-   Tier 2 — .filiere      : subsection labels (Options / DD / Cycle)
-   Tier 3 — .option-list  : the actual named item (option, partner, year)
-   Tier 4 — .sub-list     : Voie Standard vs Voie Double Diplôme — a real
-                            fork, laid out as two lanes, one dark and
-                            one bright, rather than a colored list
-   Same fill-based logic as the paper theme (solid crimson / solid
-   opposite-pole / outline) — tier 2's solid block flips from black to
-   a bright near-white chip here, since black would vanish against an
-   already-dark card.
+   Four nested levels. They are told apart by indentation, label weight and
+   a single guide rule per level — not by four different colored blocks,
+   which is what made the previous version hard to read at depth.
    ========================================================================== */
-
 .branch-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .branch-list > li {
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--text-muted);
-  line-height: 1.7;
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: 14.5px;
+    line-height: 1.7;
 }
 
-.branch-list > li:first-child { padding-top: 4px; }
-.branch-list > li:last-child { border-bottom: none; padding-bottom: 4px; }
+.branch-list > li:first-child {
+    border-top: none;
+    padding-top: 2px;
+}
 
+.branch-list > li:last-child {
+    padding-bottom: 2px;
+}
+
+/* Level 1 — the named filière. */
 .branch-list > li > strong {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.branch-list > li > strong::before {
-  content: '\25C6';
-  display: inline-block;
-  color: var(--crimson);
-  font-size: 9px;
-  margin-right: 9px;
-  transform: translateY(-1px);
+    display: block;
+    font-size: 16px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 7px;
 }
 
 .filiere {
-  list-style: none;
-  padding: 2px 0 2px 18px;
-  margin: 14px 0 0 4px;
-  border-left: 1px dashed var(--line-strong);
+    list-style: none;
+    padding: 0 0 0 18px;
+    margin: 16px 0 0;
+    border-left: 1px solid var(--border);
 }
 
 .filiere > li {
-  margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
-.filiere > li:last-child { margin-bottom: 0; }
-
-.filiere > li > strong {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  padding: 3px 10px;
-  border-radius: 2px;
-  margin-bottom: 10px;
+.filiere > li:last-child {
+    margin-bottom: 0;
 }
 
-/* Channel 1 — Options de Spécialisation: solid crimson, bright block */
-.filiere > li:nth-child(1) > strong {
-  color: var(--text-on-light);
-  background: var(--crimson);
-  border: 1px solid var(--crimson);
-}
-
-/* Channel 2 — Opportunités de Double Diplôme: solid near-white, the
-   opposite pole from channel 1 — flipped from "solid black" in the
-   paper theme, since black would blend into an already-dark card. */
-.filiere > li:nth-child(2) > strong {
-  color: var(--crimson-dark);
-  background: var(--text);
-  border: 1px solid var(--text);
-}
-
-/* Channel 3 — Organisation Du Cycle: outline only, lightest touch of
-   the three */
-.filiere > li:nth-child(3) > strong {
-  color: var(--crimson);
-  background: transparent;
-  border: 1px solid var(--crimson-line);
-}
-
+/* Level 2 — section label. Same treatment for all three channels: the
+   distinction between "options", "double diplôme" and "cycle" is carried
+   by the words, which are already explicit. */
+.filiere > li > strong,
+.filiere > li:nth-child(1) > strong,
+.filiere > li:nth-child(2) > strong,
+.filiere > li:nth-child(3) > strong,
 .filiere > li:nth-child(n+4) > strong {
-  color: var(--text-on-light);
-  background: var(--crimson);
-  border: 1px solid var(--crimson);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 10px;
 }
 
 .option-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 }
 
-/* Items inherit their section's tone as a left-border tick, so the
-   accent runs continuously from the chip above down through every
-   item it governs. */
-.option-list > li {
-  padding: 9px 14px;
-  border-left: 2px solid var(--crimson);
-  background: linear-gradient(90deg, var(--crimson-dim), transparent 45%);
-  color: var(--text-muted);
-  font-size: 14.5px;
-  line-height: 1.65;
-}
-
+/* Level 3 — the actual named item. */
+.option-list > li,
 .filiere > li:nth-child(2) .option-list > li {
-  border-left-color: var(--crimson-dark);
-  background: linear-gradient(90deg, var(--crimson-dark-dim), transparent 45%);
+    padding: 10px 14px;
+    background-color: var(--surface-2);
+    border: none;
+    border-left: 2px solid var(--border-strong);
+    color: var(--text-2);
+    font-size: 13.5px;
+    line-height: 1.65;
+}
+
+.option-list > li:first-child {
+    border-radius: 4px 4px 0 0;
+}
+
+.option-list > li:last-child {
+    border-radius: 0 0 4px 4px;
 }
 
 .option-list > li > strong {
-  color: var(--text);
-  font-weight: 700;
+    color: var(--text);
+    font-weight: 600;
 }
 
+/* Level 4 — Voie Standard vs Voie Double Diplôme. A genuine fork, so it is
+   laid out as two parallel cards; the accent marks the outbound path. */
 .sub-list {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
 }
 
-/* Voie Standard vs Voie Double Diplôme is a fork, not a list — Standard
-   stays on the plain dark surface, Double Diplôme flips to a bright
-   near-white lane (inverted from the paper theme's black lane), both
-   tied together by the same crimson top border. */
 .sub-list li {
-  border: 1px solid var(--line-strong);
-  border-top: 3px solid var(--crimson);
-  border-radius: 2px;
-  padding: 13px 15px;
-  font-size: 13.5px;
-  line-height: 1.6;
-}
-
-.sub-list li:nth-child(1) {
-  background: var(--inset);
-  color: var(--text-muted);
-}
-
-.sub-list li:nth-child(1) strong {
-  color: var(--crimson);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--border-strong);
+    border-radius: 5px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-2);
 }
 
 .sub-list li:nth-child(2) {
-  background: var(--text);
-  border-color: var(--text);
-  border-top-color: var(--crimson);
-  color: var(--text-on-light-muted);
+    border-top-color: var(--accent);
+}
+
+.sub-list li strong,
+.sub-list li:nth-child(1) strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
 }
 
 .sub-list li:nth-child(2) strong {
-  color: var(--crimson-dark);
-}
-
-.sub-list li strong {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 7px;
+    color: var(--accent);
 }
 
 /* ==========================================================================
@@ -1023,174 +1182,172 @@ div.hidden-element {
    ========================================================================== */
 @media screen and (max-width: 768px) {
     body {
-        padding: 12px;
+        padding: 18px 12px 110px;
+        font-size: 14.5px;
     }
 
-    /* On narrow screens the watermark text is wide enough to run under
-       the toggle at its desktop position — stack the toggle above it
-       instead of letting them overlap. */
+    h1 { font-size: 22px; margin-top: 36px; }
+    h2 { font-size: 17.5px; }
+
+    body > .tabs-container {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+        margin-bottom: 22px;
+    }
+
+    body > .tabs-container::-webkit-scrollbar { display: none; }
+
+    body > .tabs-container .box-tab {
+        padding: 11px 14px;
+        font-size: 12.5px;
+    }
+
     .global-theme-toggle {
-        bottom: 60px;
+        bottom: 12px;
+        left: 12px;
+        padding: 6px 10px;
+    }
+
+    .watermark {
+        bottom: 12px;
+        right: 12px;
+        max-width: 46vw;
+        font-size: 9px;
+        padding: 6px 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .main-box {
-        width: 100%;
         max-width: 100%;
-        padding: 16px 12px;
-        box-sizing: border-box;
+        padding-bottom: 16px;
     }
 
+    .box-title {
+        padding: 10px 14px;
+    }
+
+    .main-box .tabs-container,
+    .table-search-tab .tabs-container {
+        margin: 0 14px;
+    }
+
+    .box-tab {
+        padding: 9px 10px;
+        font-size: 12.5px;
+    }
+
+    /* Label above the field on narrow screens — a 150px right-aligned label
+       column leaves no room for the field itself on a phone. */
     .input-group {
-        display: grid !important;
-        grid-template-columns: minmax(0, 1fr) 75px 55px !important;
-        width: 100% !important;
-        align-items: center;
+        grid-template-columns: minmax(0, 1fr) 92px 30px;
         gap: 10px;
-        margin-bottom: 10px;
+        padding: 0 14px;
+        margin-bottom: 12px;
     }
 
     .input-group label {
-        width: auto !important;
-        min-width: 0 !important;
-        text-align: left !important;
-        margin-right: 0 !important;
-        font-size: 0.85rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        text-align: left;
+        justify-self: start;
+        font-size: 13.5px;
+        line-height: 1.3;
+    }
+
+    .input-group label:has(+ input + label) + input + label {
+        text-align: right;
+        justify-self: end;
     }
 
     .input-group input[type="number"],
     .input-group select {
-        width: 75px !important;
-        padding: 6px 4px !important;
-        font-size: 14px;
-        box-sizing: border-box;
-        text-align: center;
+        width: 100%;
     }
 
     .input-group input[type="checkbox"] {
-        width: 40px !important;
-        justify-self: start;
+        justify-self: end;
     }
 
-    .input-group label:last-child {
-        text-align: right !important;
-        font-size: 0.85rem;
-        width: auto !important;
-        margin-right: 0 !important;
+    #result {
+        font-size: 19px;
+        margin-left: 14px;
+        margin-right: 14px;
     }
 
-    .tabs-container {
-        flex-wrap: wrap;
-        gap: 6px;
-        padding-bottom: 10px;
+    .filter-inputs-row {
+        flex-direction: column;
+        padding: 0 14px;
     }
 
-    .box-tab {
-        font-size: 0.75rem;
-        padding: 6px 8px;
-        min-width: 60px;
-        max-width: none;
-    }
-
-    .table-search-tab {
-        max-width: 100%;
-        box-sizing: border-box;
-        padding: 12px;
-    }
-
-    .table-search-tab input {
-        max-width: 100%;
-        font-size: 14px;
-    }
-
-    .rank-table-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* #guide shares the same typo'd "page-content-rapper" class as
-       #schools, so it never got the explicit width constraint either.
-       Without this, an auto-sized table wanting more room than the
-       viewport drags the whole tab wider instead of just letting the
-       wrapper above scroll internally. */
-    #guide {
-        width: 100%;
-        max-width: 100vw;
-        overflow-x: hidden;
-    }
-
-    .rank-table {
-        width: max-content;
-        min-width: 100%;
-        table-layout: auto;
-    }
-
-    .rank-table th,
-    .rank-table td {
-        padding: 10px 14px;
-        font-size: 13px;
-        white-space: normal;
-    }
-
-    .rank-table th:nth-child(1),
-    .rank-table td[rowspan] {
-        min-width: 150px;
-        max-width: 200px;
-    }
-
-    .rank-table th:nth-child(2),
-    .rank-table tbody tr td:not([rowspan]):nth-child(2) {
-        min-width: 140px;
-        max-width: 180px;
-    }
-
-    .rank-table th:nth-child(3),
-    .rank-table td:nth-child(3) {
-        min-width: 70px;
-        white-space: nowrap;
-        text-align: center;
-    }
-
-    .rank-table th:nth-child(4),
-    .rank-table td:last-child {
-        min-width: 70px;
-        white-space: nowrap;
-        text-align: center;
-    }
-
+    .remarque,
     .contact-notice,
-    .remarque {
-        padding: 12px;
-        font-size: 0.85rem;
-        margin: 15px auto;
-        width: 100%;
-        box-sizing: border-box;
+    .explanation-text {
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .explanation-text {
-        max-width: 100%;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin: 15px auto;
-        padding: 0 16px;
+        padding-left: 0;
+        padding-right: 0;
     }
 
-    #schools,
-    .page-content-wrapper {
-        background-size: 20px 20px;
+    /* The table is compressed to fit rather than set to scroll: rank and
+       capacity are the two numbers the table exists to show, and a reader
+       who has to swipe sideways to reach them has effectively lost them.
+       Institution names wrap instead. */
+    .rank-table th,
+    .rank-table td {
+        padding: 9px 6px;
+        font-size: 11px;
     }
+
+    /* Wide enough that "Télécommunications" sets on one line — the column
+       was breaking it mid-word, which is worse than a narrower name column. */
+    .rank-table tbody tr td:not([rowspan]):nth-child(2) {
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+
+    .rank-table th {
+        white-space: normal;
+        font-size: 9px;
+        letter-spacing: 0.05em;
+        line-height: 1.3;
+    }
+
+    .rank-table td[rowspan] {
+        font-size: 10.5px;
+        padding-right: 6px;
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+
+    .rank-table th:nth-child(1),
+    .rank-table td[rowspan] { width: 30%; }
+
+    .rank-table th:nth-child(2),
+    .rank-table tbody tr td:not([rowspan]):nth-child(2) { width: 36%; }
+
+    .rank-table th:nth-child(3),
+    .rank-table td:nth-child(3) { width: 17%; }
+
+    .rank-table th:nth-child(4),
+    .rank-table td:last-child { width: 17%; }
 
     .school-description-card {
-        padding: 0 16px 18px;
+        padding: 0 16px 20px;
+        border-radius: 8px;
     }
 
     .school-header {
         flex-direction: column;
-        margin: 0 -16px 20px;
-        padding: 18px 16px 16px;
+        gap: 12px;
+        margin: 0 -16px 18px;
+        padding: 16px;
     }
 
     .school-badges {
@@ -1198,15 +1355,15 @@ div.hidden-element {
     }
 
     .school-title-group h4 {
-        font-size: 21px;
+        font-size: 17.5px;
     }
 
     .school-stats-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
 
-    .school-body > p:first-of-type::first-letter {
-        font-size: 2.2em;
+    .filiere {
+        padding-left: 12px;
     }
 
     .sub-list {
@@ -1215,21 +1372,21 @@ div.hidden-element {
 }
 
 /* ==========================================================================
-   PRINT
-   Always resets to black-on-white regardless of which screen theme was
-   active — a printed page has no "dark mode".
+   PRINT — neutral, ink-efficient, no interface chrome.
    ========================================================================== */
 @media print {
     body {
-        background-color: #ffffff !important;
-        color: #000000 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
         padding: 0;
+        display: block;
     }
 
     form,
     .tabs-container,
     .table-search-tab,
     .watermark,
+    .global-theme-toggle,
     .contact-notice {
         display: none !important;
     }
@@ -1241,29 +1398,22 @@ div.hidden-element {
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        background-image: none !important;
     }
 
     .school-description-card {
         break-inside: avoid;
         box-shadow: none !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid #cccccc !important;
         background: #ffffff !important;
     }
 
     .school-header {
         background: #ffffff !important;
-        border-bottom: 2px solid #c8102e !important;
+        border-bottom: 1px solid #111111 !important;
     }
 
-    .school-description-card::before,
-    .school-description-card::after {
-        border-color: #c8102e !important;
-    }
-
-    .school-title-group h3,
-    .school-body h5::before {
-        color: #c8102e !important;
+    .school-title-group h3 {
+        color: #444444 !important;
     }
 
     .school-title-group h4,
@@ -1272,68 +1422,59 @@ div.hidden-element {
     .filiere li,
     .option-list li,
     .sub-list li {
-        color: #000000 !important;
+        color: #111111 !important;
+        background: #ffffff !important;
     }
 
     .rank-table {
         display: table !important;
         width: 100% !important;
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
+        border: 1px solid #cccccc !important;
         box-shadow: none !important;
         page-break-inside: auto !important;
-        margin-bottom: 30px !important;
+        margin-bottom: 24px !important;
     }
 
     .rank-table tr {
         page-break-inside: avoid !important;
-        page-break-after: auto !important;
     }
 
     .rank-table th {
-        background-color: #f1f5f9 !important;
-        color: #1e293b !important;
-        border-bottom: 2px solid #cbd5e1 !important;
+        background: #f2f2f2 !important;
+        color: #111111 !important;
+        border-bottom: 1px solid #999999 !important;
     }
 
     .rank-table td {
-        color: #000000 !important;
-        border-top: 1px solid #e2e8f0 !important;
+        color: #111111 !important;
+        background: #ffffff !important;
+        border-top: 1px solid #dddddd !important;
     }
 
     .rank-table td[rowspan] {
-        background-color: #ffffff !important;
-        color: #c8102e !important;
+        background: #ffffff !important;
+        color: #111111 !important;
     }
 
-    .rank-table tbody td:nth-last-child(2) {
-        color: #7a0d1f !important;
-    }
-
+    .rank-table tbody td:nth-last-child(2),
     .rank-table td:last-child {
-        color: #c8102e !important;
+        color: #111111 !important;
     }
 
-    .remarque {
-        color: #475569 !important;
-        border-top: 1px solid #cbd5e1 !important;
-        page-break-inside: avoid !important;
-    }
-
+    .remarque,
     .explanation-text {
-        color: #000000 !important;
-        max-width: 100% !important;
-        text-align: justify !important;
-        page-break-inside: avoid !important;
+        color: #333333 !important;
+        background: #ffffff !important;
+        border-color: #cccccc !important;
     }
 
     .explanation-text strong {
-        color: #000000 !important;
+        color: #111111 !important;
     }
-}
 
-.justified-text p {
-  text-align: justify;
-  text-justify: inter-word;
+    .justified-text p {
+        text-align: justify;
+    }
 }

@@ -6,7 +6,7 @@
   <meta name="keywords" content="calcul de rang, prepa tunisie, enit, supcom, ept, ensit, enicar, enig, enim, eniso, enis, ipeiem, ipeit, ipeis, ipein, ipeik, ipeig, ipeib, concours national, mp, pc, pt, bg, simulateur rang concours ingénieur tunisie, guide préparatoire mp 2026, estimation rang enit ensi ept supcom, calcul moyenne prépa tunisie, rapport jury concours national 2025, orientation écoles ingénieurs tunisie, classement rang dernière admis enit">
   <meta name="author" content="Ahmed Bechir Tebourbi">
   <title>Guide de Preparatoire Tunisie</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.svg">
   <link id="theme-link" rel="stylesheet" href="stylesheet1.css">
 </head>
 <body style="padding-bottom: 100px;">
@@ -119,6 +119,10 @@
       Répartition des candidats selon les moyennes (Rapport du Jury 2025):
     </p>
     <canvas id="chart" width="800" height="450"></canvas>
+    <p class="repar">
+      Graphique des rangs en fonction des moyennes selon la calculatrice :
+    </p>
+    <img src="distribution_bright.svg" alt="Répartition des candidats selon les moyennes (Rapport du Jury 2025)">
     <p class="explanation-text">
       La calculatrice commence par calculer votre moyenne selon les notes que vous avez entrées. Supposons que cette moyenne soit de 7.6, vous vous situez alors dans l'intervalle [7,8[. Votre rang initial est λ = 1. Selon le graphique, tous les candidats des intervalles de [8,20] sont en avance sur vous. On ajoute donc à λ la somme de tous ces intervalles supérieurs (167 + 163 + 161 + 136 + 105 + 66 + 55 + 29 + 15 + 0 + 2 + 0 = 899), ce qui donne λ = 900.<br><br>
       Une fois les candidats des intervalles supérieurs cumulés, il ne reste plus qu'à estimer votre position précise au sein de l'intervalle [7,8[. Puisque la moyenne est de 7.6, la partie décimale de 0.6 indique que vous avez dépassé 60% de l'intervalle en partant de la note 7. Par interpolation linéaire, on considère que les 150 candidats présents dans cet intervalle sont répartis de manière uniforme. On calcule alors la part proportionnelle en multipliant l'effectif de l'intervalle par le complémentaire de cette décimale, soit 100% - 60% = 40% (150 × 0.4 = 60). Cela signifie que 60 personnes ont une meilleure moyenne que vous au sein de cette tranche. Ce nombre est ensuite ajouté à λ pour obtenir votre rang final précis : λ = 960.
