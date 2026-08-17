@@ -721,90 +721,38 @@ guidePage.querySelectorAll('[data-table-target]').forEach(tab => {
     });
 });
 
-const canvas = document.getElementById('chart');
-const ctx = canvas.getContext('2d');
-
-const data = rangsMP[2025];
-
-const padding = { top: 40, right: 30, bottom: 50, left: 20 };
-const chartWidth = canvas.width - padding.left - padding.right;
-const chartHeight = canvas.height - padding.top - padding.bottom;
-
-const maxVal = Math.max(...data);
-const barCount = data.length;
-const barSpacing = 6;
-const totalSpacingSpace = barSpacing * (barCount - 1);
-const barWidth = (chartWidth - totalSpacingSpace) / barCount;
+// The bar chart that used to live on <canvas id="chart"> is now served as the
+// repartition/distribution SVGs, and that element is gone from the markup.
+// The setup that stood here ran at top level and threw on the missing
+// element, which aborted the rest of this file -- including the theme toggle
+// below. Nothing else reads those values, so the block is simply removed.
 
 const themeButton = document.getElementById('theme');
 const themeLink = document.getElementById('theme-link');
 
-function drawChart() {
-    // Dynamic color selection matching the active stylesheet:
-    // stylesheet.css (unchecked) is now the crimson/white light theme, so its
-    // text/axis color is black; the checked alternate (stylesheet1.css) stays white.
-    // Guarded with `?.` and a fallback so this never throws if the theme
-    // toggle checkbox isn't present in the page — the chart still needs
-    // to draw either way.
-    const graphTextColor = themeButton?.checked ? '#FFFFFF' : '#000000';
-    // Bar fill also follows the active theme: the dark theme's primary
-    // crimson is a brighter shade than the light theme's, so the bars
-    // switch along with everything else instead of staying fixed.
-    const barColor = themeButton?.checked ? '#287DCC' : '#1C568F';
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = graphTextColor;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding.left, padding.top);
-    ctx.lineTo(padding.left, canvas.height - padding.bottom);
-    ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
-    ctx.stroke();
-
-    data.forEach((val, n) => {
-        const x = padding.left + n * (barWidth + barSpacing);
-        const barHeight = (val / maxVal) * chartHeight;
-        const y = canvas.height - padding.bottom - barHeight;
-
-        ctx.fillStyle = barColor;
-        ctx.fillRect(x, y, barWidth, barHeight);
-
-        ctx.fillStyle = graphTextColor;
-        ctx.font = 'bold 10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText(val, x + barWidth / 2, y - 4);
-
-        ctx.save();
-        ctx.translate(x + barWidth / 2, canvas.height - padding.bottom + 12);
-        ctx.rotate(-Math.PI / 4);
-        ctx.fillStyle = graphTextColor;
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`[${n},${n+1}[`, 0, 0);
-        ctx.restore();
-    });
-}
-
-drawChart();
-
 if (themeButton) {
-    themeButton.addEventListener('change', function() {
-        if (this.checked) {
-          themeLink.setAttribute('href', 'stylesheet1.css');
-          document.querySelector('img[source], img[src$="distribution.svg"]').src = 'distribution_bright.svg';
-        } else {
-          themeLink.setAttribute('href', 'stylesheet.css?v=2');
-          document.querySelector('img[source], img[src$="distribution_bright.svg"]').src = 'distribution.svg';
-        }
+  const repartitionImg = document.getElementById('repartition-img');
+  const distributionImg = document.getElementById('distribution-img');
 
-        drawChart();
+  // The knob sits beside the moon when the box is checked, so checked = dark.
+  // stylesheet.css is the dark theme; stylesheet1.css is the bright one.
+  //
+  // Careful with the SVG names, they read backwards: the *_bright.svg files
+  // are drawn with WHITE axes and labels, so they are the ones that belong on
+  // the DARK page. The plain .svg files use black ink and belong on the bright
+  // page. Pairing them the other way round makes the labels invisible.
+  function applyTheme(dark) {
+    themeLink.setAttribute('href', (dark ? 'stylesheet.css' : 'stylesheet1.css') + '?v=2');
+    distributionImg.src = dark ? 'distribution_bright.svg' : 'distribution.svg';
+    repartitionImg.src = dark ? 'repartition_bright.svg' : 'repartition.svg';
+  }
 
-        // Call the original function in your script that calculates the scores, if present
-        if (typeof calculateScore === 'function') {
-            calculateScore();
-        }
-    });
+  // Run once on load: browsers restore checkbox state across a refresh, so the
+  // box can come back in one state while the markup still points at the other
+  // theme's stylesheet and images.
+  applyTheme(themeButton.checked);
+
+  themeButton.addEventListener('change', function () {
+    applyTheme(this.checked);
+  });
 }

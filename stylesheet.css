@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 /* ==========================================================================
-   BRIGHT THEME
-   Guide de Prépa Tunisie — bright theme.
+   DARK THEME
+   Guide de Prépa Tunisie — dark theme.
 
-   Structure: this file is [type + metrics] + [bright tokens] + [shared
+   Structure: this file is [type + metrics] + [dark tokens] + [shared
    component rules]. stylesheet.css and stylesheet1.css differ ONLY in the
    token block; every component rule below is identical in both files, so a
    change to a component needs making once, in the same place, in each.
@@ -28,61 +28,69 @@
 }
 
 /* ==========================================================================
-   THEME — Bright ("paper grey")
-   The page is a soft cool grey, not white; panels are white and sit on top
-   of it. That one step of separation is what stops a light UI from looking
-   like an unstyled document, and it lets borders stay light instead of
-   having to do all the work.
+   THEME — Dark ("graphite")
+   Cool neutral greys with a single blue accent. Greys carry a slight blue
+   cast so the accent belongs to the palette rather than sitting on top of
+   it. Surfaces separate by luminance and a hairline border, not by shadow,
+   which is what keeps a dark UI legible.
    ========================================================================== */
 :root {
-    color-scheme: light;
+    color-scheme: dark;
 
     /* Surfaces, from page back to the most raised element */
-    --bg: #eceff3;
-    --surface: #ffffff;
-    --surface-2: #f5f7fa;
-    --surface-3: #e8ecf1;
-    --surface-inset: #f2f4f8;
+    --bg: #0e1116;
+    --surface: #151a21;
+    --surface-2: #1b212a;
+    --surface-3: #222933;
+    --surface-inset: #11151b;
 
-    --border: #dde2e9;
-    --border-strong: #c2cad5;
-    --border-subtle: #e7ebf0;
+    /* Hairlines. --border is the default rule; --border-strong marks the
+       edge of an interactive control so inputs read as targets. */
+    --border: #262e39;
+    --border-strong: #38424f;
+    --border-subtle: #1c232c;
 
-    --text: #111820;
-    --text-2: #4d5866;
-    --text-3: #78838f;
+    --text: #e7ebf0;
+    --text-2: #98a3b2;
+    --text-3: #6a7583;
 
-    --accent: #1a5fd0;
-    --accent-strong: #12459b;
-    --accent-muted: #5b8ce0;
-    /* Same hue as --accent here: on a light ground the link color already
-       has enough weight to carry white text as a fill. */
-    --accent-fill: #1a5fd0;
-    --accent-fill-hover: #17539b;
-    --accent-soft: rgba(26, 95, 208, 0.08);
-    --accent-line: rgba(26, 95, 208, 0.35);
+    /* One accent. Used for state (active, focus, link) and for the numbers
+       that matter, never as decoration. */
+    --accent: #4d9cf5;
+    --accent-strong: #7ab6ff;
+    --accent-muted: #2f6db8;
+    /* The accent used as a FILL is a step deeper than the accent used as
+       text. A link has to hold against the dark background; a filled chip
+       has to hold white text on top of it. Same hue, two jobs. */
+    --accent-fill: #2c6cb9;
+    --accent-fill-hover: #357cd0;
+    --accent-soft: rgba(77, 156, 245, 0.13);
+    --accent-line: rgba(77, 156, 245, 0.38);
     --on-accent: #ffffff;
 
-    /* Dark in the bright theme too — see the note in stylesheet.css. This
-       is the one place the light theme goes near-black on purpose. */
-    --table-head-bg: #141b24;
-    --table-head-text: #f2f5f8;
+    /* The rank table's header bar is a deliberately dark band that breaks
+       from the body of the table — the strongest single contrast on the
+       guide page, and the thing that made the original table read as a
+       datasheet rather than a list. Kept dark in BOTH themes so the table
+       has the same character either way. */
+    --table-head-bg: #080c12;
+    --table-head-text: #e7eff6;
 
-    --success: #12724d;
-    --success-soft: rgba(18, 114, 77, 0.09);
-    --danger: #b93a2e;
-    --danger-soft: rgba(185, 58, 46, 0.09);
+    --success: #43b581;
+    --success-soft: rgba(67, 181, 129, 0.12);
+    --danger: #e5675c;
+    --danger-soft: rgba(229, 103, 92, 0.12);
 
 
-    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-    --shadow-md: 0 10px 28px -14px rgba(16, 24, 40, 0.28);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
 }
 
 
 /* Select chevron, tinted per theme so it never sits on the field as a
    foreign black mark. */
 :root {
-    --chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'><path d='M1 1L6 6L11 1' stroke='%2378838f' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    --chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'><path d='M1 1L6 6L11 1' stroke='%236a7583' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 }
 
 /* ==========================================================================
@@ -612,6 +620,22 @@ input[type="checkbox"]:checked::before {
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
+}
+
+/* Chart images (repartition / distribution SVGs) */
+.explanation-text + img,
+form#calculator > img,
+#calculator img {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: 0 auto 24px;
+    padding: 12px;
+    box-sizing: border-box;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
 }
 
 #chart {
