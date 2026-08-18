@@ -16,7 +16,7 @@ const epreuve2 = { "MP": "Math I:", "PC": "Math:", "T": "Math:", "BG": "Math:" }
 const epreuve3 = { "MP": "STA:", "PC": "STA:", "T": "STA:", "BG": "Géologie:" };
 
 const Candidates = {
-  2025: { "MP": 1522, "PC": 1186, "T": 752, "BG": 293 },
+  2025: { "MP": 1521, "PC": 1185, "T": 752, "BG": 293 },
   2024: { "MP": 1714, "PC": 1235, "T": 768, "BG": 328 },
   2023: { "MP": 1709, "PC": 1148, "T": 711, "BG": 304 },
   2022: { "MP": 0, "PC": 0, "T": 0, "BG": 0 }
@@ -33,14 +33,14 @@ const rangsMP = {
   2025: [ 1, 10, 18, 55, 90, 138, 160, 150, 167, 163, 161, 136, 105, 66, 55, 29, 15, 0, 2, 0 ],
   2024: [ 5, 29, 57, 134, 181, 209, 209, 224, 201, 162, 121, 78, 58, 30, 7, 6, 2, 0, 0, 0 ],
   2023: [ 0, 10, 28, 43, 89, 136, 186, 182, 201, 167, 187, 141, 129, 84, 63, 40, 17, 5, 0, 0, 0 ],
-  2022: [40,60,213,329,319,237,217,129,74,63,36,30,19,13,4,1,1,0,0,0]
+  2022: [ 40, 60, 213, 329, 319, 237, 217, 129, 74, 63, 36, 30, 19, 13, 4, 1, 1, 0, 0, 0 ]
 };
 
 const rangsPC = {
   2025: [ 0, 1, 13, 52, 90, 150, 174, 165, 143, 118, 99, 85, 42, 28, 13, 9, 2, 1, 0, 0 ],
   2024: [ 4, 10, 31, 93, 150, 183, 203, 157, 131, 96, 67, 40, 35, 22, 6, 6, 0, 0, 0 ],
   2023: [ 1, 5, 15, 21, 66, 102, 138, 163, 169, 181, 103, 81, 49, 31, 9, 6, 6, 1, 0, 0, 0 ],
-  2022: [22,46,211,325,318,219,148,67,30,16,9,4,2,0,1,0,0,0,0,0]
+  2022: [ 22, 46, 211, 325, 318, 219, 148, 67, 30, 16, 9, 4, 2, 0, 1, 0, 0, 0, 0, 0 ]
 };
 
 const rangsT = {
@@ -305,7 +305,40 @@ function computeScore(values) {
   return total;
 }
 
+// --- 2026 MP: normal-fit quantile-matching model ---
+// No full histogram has been published yet for 2026, so instead of the
+// histogram-interpolation method used for 2022-2025, this assumes the
+// year's averages are normally distributed N(MU, SIGMA) and calibrates
+// (MU, SIGMA) from two known (average, real rank) anchor points via the
+// probit transform. Only valid for MP; see handoff notes.
+const RANG_2026_MP = { N: 1493, MU: 8.8986, SIGMA: 3.3158 };
+
+// Abramowitz-Stegun 7.1.26 erf approximation (accurate to ~1.5e-7), used to
+// reimplement scipy.stats.norm.cdf in the browser without a stats library.
+function erf(x) {
+  const sign = x < 0 ? -1 : 1;
+  x = Math.abs(x);
+  const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741,
+        a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+  const t = 1 / (1 + p * x);
+  const y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+  return sign * y;
+}
+
+function normCdf(x) {
+  return 0.5 * (1 + erf(x / Math.SQRT2));
+}
+
+function computeRang2026MP(avg) {
+  const { N, MU, SIGMA } = RANG_2026_MP;
+  const rank = N * (1 - normCdf((avg - MU) / SIGMA));
+  return Math.max(1, Math.round(rank));
+}
+
 function computeRang(avg, year, tab) {
+  if (year === "2026") {
+    return tab === "MP" ? computeRang2026MP(avg) : 0;
+  }
   const selectedRangs = rangs[tab][year];
   if (!selectedRangs) return 0;
   let r = 1, roundAvg = Math.floor(avg);
@@ -339,7 +372,7 @@ function update() {
     
     let rankLabel = input.nextElementSibling;
     
-    if (yearSelect.value === "2022") {
+    if (yearSelect.value === "2022" || yearSelect.value === "2026") {
       if (rankLabel && rankLabel.tagName === 'LABEL') {
         rankLabel.remove();
       }
@@ -364,6 +397,14 @@ function update() {
   const rang = computeRang(avg, yearSelect.value, activeTab);
 
   if (yearSelect.value === "2022") {
+    resultDiv.textContent = "Rang ≈ " + rang;
+    resultDiv3.textContent = "";
+    resultDiv3.classList.remove("Admise", "Refuse");
+  } else if (yearSelect.value === "2026" && activeTab !== "MP") {
+    resultDiv.textContent = "Indisponible pour 2026";
+    resultDiv3.textContent = "";
+    resultDiv3.classList.remove("Admise", "Refuse");
+  } else if (yearSelect.value === "2026") {
     resultDiv.textContent = "Rang ≈ " + rang;
     resultDiv3.textContent = "";
     resultDiv3.classList.remove("Admise", "Refuse");
