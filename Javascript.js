@@ -305,46 +305,7 @@ function computeScore(values) {
   return total;
 }
 
-// --- 2026 MP: normal-fit quantile-matching model ---
-// No full histogram has been published yet for 2026, so instead of the
-// histogram-interpolation method used for 2022-2025, this assumes the
-// year's averages are normally distributed N(MU, SIGMA) and calibrates
-// (MU, SIGMA) via the probit transform (z = norm.ppf(1 - rank/N), then a
-// least-squares fit of avg = MU + SIGMA*z). Only valid for MP.
-//
-// Calibrated from 4 known (average, real rank) points:
-//   (8.79, 766), (10.4356818182, 472), (11.47, 327), (7.68, 986)
-// Fit residuals at those 4 points: -10.4, -6.7, +6.6, +8.3 ranks -- small
-// and spread evenly, unlike an exact 2-point fit (which hits 2 points
-// exactly but can miss a 3rd/4th by much more). See sigmamu.py for the fit.
-const RANG_2026_MP = { N: 1493, MU: 8.9503, SIGMA: 3.1874 };
-
-// Abramowitz-Stegun 7.1.26 erf approximation (accurate to ~1.5e-7), used to
-// reimplement scipy.stats.norm.cdf in the browser without a stats library.
-function erf(x) {
-  const sign = x < 0 ? -1 : 1;
-  x = Math.abs(x);
-  const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741,
-        a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
-  const t = 1 / (1 + p * x);
-  const y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-  return sign * y;
-}
-
-function normCdf(x) {
-  return 0.5 * (1 + erf(x / Math.SQRT2));
-}
-
-function computeRang2026MP(avg) {
-  const { N, MU, SIGMA } = RANG_2026_MP;
-  const rank = N * (1 - normCdf((avg - MU) / SIGMA));
-  return Math.max(1, Math.round(rank));
-}
-
 function computeRang(avg, year, tab) {
-  if (year === "2026") {
-    return tab === "MP" ? computeRang2026MP(avg) : 0;
-  }
   const selectedRangs = rangs[tab][year];
   if (!selectedRangs) return 0;
   let r = 1, roundAvg = Math.floor(avg);
