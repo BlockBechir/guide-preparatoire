@@ -16,7 +16,7 @@ const epreuve2 = { "MP": "Math I:", "PC": "Math:", "T": "Math:", "BG": "Math:" }
 const epreuve3 = { "MP": "STA:", "PC": "STA:", "T": "STA:", "BG": "Géologie:" };
 
 const Candidates = {
-  2025: { "MP": 1521, "PC": 1185, "T": 752, "BG": 293 },
+  2025: { "MP": 1522, "PC": 1186, "T": 752, "BG": 293 },
   2024: { "MP": 1714, "PC": 1235, "T": 768, "BG": 328 },
   2023: { "MP": 1709, "PC": 1148, "T": 711, "BG": 304 },
   2022: { "MP": 0, "PC": 0, "T": 0, "BG": 0 }
