@@ -211,6 +211,63 @@ form#calculator {
 }
 
 /* ==========================================================================
+   SITE LOGO
+   The G is an inline SVG drawn in currentColor with an accent crossbar, so it
+   follows the theme tokens with no image swap when the stylesheet changes.
+   It stands in for the first letter of "guide", so it sits on the text
+   baseline and dips just below it, like a round letter would.
+   ========================================================================== */
+.site-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 6px 0 22px;
+}
+
+.site-logo,
+.site-logo:hover {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    color: var(--text);
+    border-bottom: none;
+    text-decoration: none;
+}
+
+.site-logo:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+
+.site-logo-g {
+    display: inline-block;
+    width: 1.08em;
+    height: 1.08em;
+    vertical-align: -0.07em;
+    margin-right: 0.03em;
+    overflow: visible;
+}
+
+.site-logo-g path {
+    fill: none;
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.site-logo-g-arc { stroke: currentColor; }
+.site-logo-g-bar { stroke: var(--accent); }
+
+.site-logo-accent {
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* ==========================================================================
    TABS
    ========================================================================== */
 .tabs-container {
@@ -1197,6 +1254,9 @@ input[type="number"].rank-filter {
    RESPONSIVE
    ========================================================================== */
 @media screen and (max-width: 768px) {
+    .site-header { margin: 2px 0 16px; }
+    .site-logo, .site-logo:hover { font-size: 29px; }
+
     body {
         padding: 18px 12px 110px;
         font-size: 14.5px;
